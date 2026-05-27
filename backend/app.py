@@ -259,7 +259,7 @@ def map():
             logger.warning(f"Errore fetch {label}: {e}")
 
     return render_template(
-        "map.html",
+        "map.j2.html",
         **data,
         has_future_announcements=bool(data["announcements"]),
     )
@@ -270,7 +270,7 @@ def map():
 def login():
     if "user_login" in session:
         return redirect(url_for("choose"))
-    return render_template("login.html", auth_url=AUTH_URL)
+    return render_template("login.j2.html", auth_url=AUTH_URL)
 
 
 @app.route("/callback")
@@ -318,7 +318,7 @@ def bde():
 def choose():
     if "user_login" not in session:
         return redirect(url_for("login"))
-    return render_template("choose.html")
+    return render_template("choose.j2.html")
 
 
 @app.route("/announcement")
@@ -345,7 +345,7 @@ def create_announcement():
 
         if not title or not description or not start_date or not end_date:
             return render_template(
-                "announcement.html",
+                "announcement.j2.html",
                 error="Tutti i campi obbligatori devono essere compilati.",
             )
 
@@ -370,7 +370,7 @@ def create_announcement():
         logger.info(f"{author} ha creato l'annuncio {announcement_id}")
         return redirect(url_for("edit_announcements"))
 
-    return render_template("announcement.html")
+    return render_template("announcement.j2.html")
 
 
 @app.route("/announcements")
@@ -384,7 +384,7 @@ def edit_announcements():
     items = list_announcements()
     if not show_all:
         items = [item for item in items if item.get("created_by") == user_login]
-    return render_template("edit_announcements.html", announcements=items)
+    return render_template("edit_announcements.j2.html", announcements=items)
 
 
 @app.route("/edit_announcement/<announcement_id>", methods=["GET", "POST"])
@@ -417,7 +417,7 @@ def edit_announcement(announcement_id):
 
         if not title or not description or not start_date or not end_date:
             return render_template(
-                "edit_announcement.html",
+                "edit_announcement.j2.html",
                 announcement=announcement,
                 error="Tutti i campi obbligatori devono essere compilati.",
             )
@@ -443,7 +443,7 @@ def edit_announcement(announcement_id):
         logger.info(f"{user_login} ha aggiornato l'annuncio {announcement_id}")
         return redirect(url_for("edit_announcements"))
 
-    return render_template("edit_announcement.html", announcement=announcement)
+    return render_template("edit_announcement.j2.html", announcement=announcement)
 
 
 @app.route("/staff")
@@ -453,7 +453,7 @@ def staff_dashboard():
             f"Accesso staff non autorizzato da {session.get('user_login')} ({request.remote_addr})"
         )
         return redirect(url_for("choose"))
-    return render_template("staff_dashboard.html", NAGIOS_URL=config.NAGIOS_URL)
+    return render_template("staff_dashboard.j2.html", NAGIOS_URL=config.NAGIOS_URL)
 
 
 @app.route("/banner_management", methods=["GET", "POST"])
@@ -476,7 +476,7 @@ def banner_management():
         return redirect(url_for("banner_management"))
 
     return render_template(
-        "banner_management.html",
+        "banner_management.j2.html",
         banner_visible=banner["visible"],
         banner_text=banner["text"],
     )
@@ -516,7 +516,7 @@ def staff_maintenance():
         )
         return "Unauthorized", 403
     maintenance_pcs = load_json(config.MAINTENANCE_FILE, default=[])
-    return render_template("staff.html", maintenance_pcs=maintenance_pcs)
+    return render_template("staff.j2.html", maintenance_pcs=maintenance_pcs)
 
 
 @app.route("/toggle_maintenance", methods=["POST"])
