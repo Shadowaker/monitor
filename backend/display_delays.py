@@ -2,6 +2,7 @@
 
 import json
 import logging
+
 try:
     from . import config
 except ImportError:

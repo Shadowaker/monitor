@@ -114,7 +114,9 @@ def payload_to_row(data, location_id):
 
 def write_yaml(path: Path, root_key: str, items: list) -> None:
     with open(path, "w", encoding="utf-8") as f:
-        yaml.safe_dump({root_key: items}, f, default_flow_style=False, allow_unicode=True)
+        yaml.safe_dump(
+            {root_key: items}, f, default_flow_style=False, allow_unicode=True
+        )
 
 
 def write_checkup_csv(rows: list) -> None:

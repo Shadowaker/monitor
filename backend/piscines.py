@@ -108,7 +108,9 @@ def _format_days_label(days: int) -> str:
     return f"Mancano {days} giorni"
 
 
-def build_piscine_countdown(start_day: str, start_month: str, start_year: str) -> dict[str, str]:
+def build_piscine_countdown(
+    start_day: str, start_month: str, start_year: str
+) -> dict[str, str]:
     """
     Contatore in giorni fino all'inizio piscine:
     - verde: 6+ mesi
@@ -164,7 +166,11 @@ def parse_piscine_date_range(raw: str, index: int) -> dict | None:
         "end_month": end_month.lower(),
         "year": year,
     }
-    session.update(build_piscine_countdown(session["start_day"], session["start_month"], start_year))
+    session.update(
+        build_piscine_countdown(
+            session["start_day"], session["start_month"], start_year
+        )
+    )
     return session
 
 

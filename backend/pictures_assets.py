@@ -79,4 +79,7 @@ def pick_random_picture_urls(static_folder, url_for_fn, count=9):
         return []
 
     picked = random.sample(names, min(count, len(names)))
-    return [url_for_fn("static", filename=ensure_thumbnail(static_folder, name)) for name in picked]
+    return [
+        url_for_fn("static", filename=ensure_thumbnail(static_folder, name))
+        for name in picked
+    ]

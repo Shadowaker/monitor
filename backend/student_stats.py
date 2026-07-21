@@ -223,7 +223,9 @@ def build_exam_rank_distribution(csv_path: Path | None = None):
     if not buckets and not advanced_core:
         return {"labels": [], "values": []}
 
-    labels = [f"Cerchio {r}" for r in range(EXAM_RANK_MIN, EXAM_RANK_MAX + 1) if buckets[r]]
+    labels = [
+        f"Cerchio {r}" for r in range(EXAM_RANK_MIN, EXAM_RANK_MAX + 1) if buckets[r]
+    ]
     values = [buckets[r] for r in range(EXAM_RANK_MIN, EXAM_RANK_MAX + 1) if buckets[r]]
     if advanced_core:
         labels.append("Advanced Core")
@@ -233,6 +235,8 @@ def build_exam_rank_distribution(csv_path: Path | None = None):
 
 def build_exam_rank_counts(csv_path: Path | None = None):
     buckets, advanced_core = _exam_rank_buckets(csv_path)
-    counts = {str(r): buckets.get(r, 0) for r in range(EXAM_RANK_MIN, EXAM_RANK_MAX + 1)}
+    counts = {
+        str(r): buckets.get(r, 0) for r in range(EXAM_RANK_MIN, EXAM_RANK_MAX + 1)
+    }
     counts[ADVANCED_CORE_KEY] = advanced_core
     return counts

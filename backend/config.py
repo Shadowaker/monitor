@@ -49,7 +49,7 @@ FUNNEL_STATS = [
     # "1 candidato su 10 accede al Common Core",
     '1 candidato su 2 dei "piscinanti" accede al CC',
     # "1 alumno su 4 prosegue il percorso advanced",
-    "* Dati dei Campus di Roma e Firenze dal 1/1/2023 a oggi"
+    "* Dati dei Campus di Roma e Firenze dal 1/1/2023 a oggi",
 ]
 WORLD_MAP_SIDEBAR_ENABLED = (
     os.getenv("WORLD_MAP_SIDEBAR_ENABLED", "true").lower() == "true"
@@ -95,7 +95,9 @@ CC_SIDEBAR_RIGHT = os.getenv("CC_SIDEBAR_RIGHT", "false").lower() == "true"
 CC_GRADE_FOOTNOTE_MARK_NEON = (
     os.getenv("CC_GRADE_FOOTNOTE_MARK_NEON", "true").lower() == "true"
 )
-CC_GRADE_FOOTNOTE_BELOW = os.getenv("CC_GRADE_FOOTNOTE_BELOW", "false").lower() == "true"
+CC_GRADE_FOOTNOTE_BELOW = (
+    os.getenv("CC_GRADE_FOOTNOTE_BELOW", "false").lower() == "true"
+)
 CC_STATS_INTRO_NEON = os.getenv("CC_STATS_INTRO_NEON", "true").lower() == "true"
 CC_STATS_INTRO_BELOW = os.getenv("CC_STATS_INTRO_BELOW", "false").lower() == "true"
 # true → su /statistics/cc, tornando indietro da pagina successiva parte dall'ultimo cerchio

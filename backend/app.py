@@ -21,6 +21,7 @@ import urllib3
 import yaml
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from werkzeug.middleware.proxy_fix import ProxyFix
+
 try:
     from . import cc_svg
     from . import config
@@ -66,6 +67,7 @@ app.config.update(
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
 )
+
 
 # === Logging ===
 def setup_logging():
@@ -578,7 +580,9 @@ def statistics():
 
 @app.route("/statistics/cc")
 def statistics_cc():
-    svg_file = config.CC_SVG_MASTERY if config.CC_SHOW_MASTERY else config.CC_SVG_CLASSIC
+    svg_file = (
+        config.CC_SVG_MASTERY if config.CC_SHOW_MASTERY else config.CC_SVG_CLASSIC
+    )
     svg_path = os.path.join(app.static_folder, "svg", svg_file)
     try:
         with open(svg_path, encoding="utf-8") as f:
@@ -836,8 +840,7 @@ def display_delays_management():
         for page_id in cfg["cycle"]
     ]
     all_pages = [
-        display_delays.KIOSK_PAGES[page_id]
-        for page_id in display_delays.KIOSK_PAGES
+        display_delays.KIOSK_PAGES[page_id] for page_id in display_delays.KIOSK_PAGES
     ]
 
     page_catalog = {

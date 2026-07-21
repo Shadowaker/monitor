@@ -14,16 +14,14 @@ SPONSOR_LABELS = {
 }
 
 # Loghi scuri da invertire su sfondo blu
-SPONSOR_INVERT_ON_DARK = {"luiss", "zacconi", "lottomatica"}#, "engineering", "fs"}
+SPONSOR_INVERT_ON_DARK = {"luiss", "zacconi", "lottomatica"}  # , "engineering", "fs"}
 
 
 def count_sponsor_logos(static_folder):
     partner_dir = Path(static_folder) / "svg" / "old_partner"
     try:
         return sum(
-            1
-            for name in os.listdir(partner_dir)
-            if Path(name).suffix.lower() == ".svg"
+            1 for name in os.listdir(partner_dir) if Path(name).suffix.lower() == ".svg"
         )
     except OSError:
         return 0
