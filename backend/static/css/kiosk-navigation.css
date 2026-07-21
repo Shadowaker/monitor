@@ -1,0 +1,52 @@
+.kiosk-nav-zones {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+.kiosk-nav-zone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 22%;
+    max-width: 14rem;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    pointer-events: auto;
+    cursor: default;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.kiosk-nav-zone--prev {
+    left: 0;
+}
+
+.kiosk-nav-zone--next {
+    right: 0;
+}
+
+.kiosk-nav-zone:focus {
+    outline: none;
+}
+
+.kiosk-nav-zone:active {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+body.kiosk-paused::after {
+    content: "PAUSA";
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 10001;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font: 600 0.75rem/1 "Segoe UI", system-ui, sans-serif;
+    letter-spacing: 0.08em;
+    pointer-events: none;
+}

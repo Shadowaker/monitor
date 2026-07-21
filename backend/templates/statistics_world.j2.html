@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>42 Network — Monitor 42Roma</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/statistics-world.css') }}">
+  <script>
+    window.WorldStatisticsBootstrap = {
+      campusCounts: {{ campus_counts|tojson|safe }},
+      countryNames: {{ country_names|tojson|safe }},
+      maxCount: {{ max_count|tojson|safe }},
+      defaultFill: "#ececec",
+      maxFill: "#04809F",
+      markerFill: "#00BABC",
+      markerStroke: "#5ef0f2",
+      schoolsByCountry: {{ schools_by_country|default({})|tojson|safe }},
+      sidebarVertical: {{ world_map_sidebar_vertical|tojson|safe }},
+      highlightCountry: {{ world_map_highlight_country|tojson|safe }},
+      nextPageUrl: {{ delays.next_page_url|tojson|safe }},
+      rotateAfterMs: {{ delays.world_ms|tojson|safe }},
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/statistics-world.js') }}" defer></script>
+  {% include 'partials/kiosk_nav.j2.html' %}
+</head>
+<body class="world-stats-page">
+  <main class="world-stats-main{% if not world_map_sidebar_enabled %} world-stats-main--fullscreen{% elif not world_map_sidebar_vertical %} world-stats-main--horizontal{% endif %}">
+    {% if world_map_sidebar_enabled and world_map_sidebar_vertical %}
+    <aside class="world-stats-schools-column" id="world-schools-europe" aria-label="Campus Europa"></aside>
+    {% endif %}
+    <div class="world-stats-center">
+      <header class="world-stats-header">
+        <h1>42 Network</h1>
+        <p>Campus nel mondo per paese</p>
+      </header>
+      <div class="world-stats-svg-wrap" id="world-svg-root" aria-label="Mappa campus 42 nel mondo">
+        {{ svg_content|safe }}
+      </div>
+    </div>
+    {% if world_map_sidebar_enabled and world_map_sidebar_vertical %}
+    <aside class="world-stats-schools-column" id="world-schools-world" aria-label="Campus altri continenti"></aside>
+    {% elif world_map_sidebar_enabled %}
+    <aside class="world-stats-schools-bottom" id="world-schools-all" aria-label="Campus nel mondo per paese"></aside>
+    {% endif %}
+  </main>
+</body>
+</html>

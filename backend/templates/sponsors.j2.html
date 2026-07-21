@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gli sponsor di 42 Roma — Monitor 42Roma</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sponsors.css') }}">
+  <script>
+    window.SponsorsBootstrap = {
+      slideDurationMs: {{ delays.sponsors_ms|tojson|safe }},
+      nextPageUrl: {{ delays.next_page_url|tojson|safe }},
+      prevPageUrl: {{ delays.prev_page_url|tojson|safe }},
+      sponsorCount: {{ sponsor_logos|length|tojson|safe }},
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/sponsors-page.js') }}" defer></script>
+  {% include 'partials/kiosk_nav.j2.html' %}
+</head>
+<body class="sponsors-page">
+  <header class="sponsors-header">
+    <img
+      class="sponsors-header__logo"
+      src="{{ url_for('static', filename='svg/42ROMA-side-black.svg') }}"
+      alt="42 Roma"
+      width="232"
+      height="97"
+    >
+    <h1 class="sponsors-header__title">Grazie per aver sostenuto 42 Roma!</h1>
+  </header>
+
+  <section class="sponsors-carousel" aria-label="Loghi sponsor">
+    <div class="sponsors-carousel__viewport">
+      <div class="sponsors-carousel__track" id="sponsors-track">
+        {% for logo in sponsor_logos %}
+        <article class="sponsors-slide">
+          <div class="sponsors-slide__card">
+            <div class="sponsors-slide__inner{% if logo.invert %} sponsors-slide__inner--invert{% endif %}">
+              <img src="{{ logo.src }}" alt="{{ logo.name }}" loading="lazy" decoding="async">
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="sponsors-pagination" id="sponsors-pagination" aria-hidden="true"></div>
+  </section>
+</body>
+</html>

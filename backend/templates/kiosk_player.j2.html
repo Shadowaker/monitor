@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitor 42Roma — Kiosk</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/kiosk-player.css') }}">
+  <script src="{{ url_for('static', filename='js/kiosk-player.js') }}" defer></script>
+  {% include 'partials/kiosk_nav.j2.html' %}
+</head>
+<body class="kiosk-player-page">
+  <iframe
+    id="kiosk-frame"
+    class="kiosk-player-frame"
+    title="Monitor 42 Roma"
+    allow="autoplay"
+  ></iframe>
+</body>
+</html>

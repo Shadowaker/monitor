@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiche — Monitor 42Roma</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/statistics.css') }}">
+    <script src="{{ url_for('static', filename='vendor/chart.umd.min.js') }}" defer></script>
+    <script>
+        window.StatisticsBootstrap = {
+            studentOriginChart: {{ student_origin_chart|default({'labels': [], 'values': []})|tojson|safe }},
+            studentAgeChart: {{ student_age_chart|default({'labels': [], 'values': []})|tojson|safe }},
+            studentGenderChart: {{ student_gender_chart|default({'labels': [], 'values': []})|tojson|safe }},
+            studentExamChart: {{ student_exam_chart|default({'labels': [], 'values': []})|tojson|safe }},
+        };
+        window.StatisticsKioskBootstrap = {
+            nextPageUrl: {{ delays.next_page_url|tojson|safe }},
+            prevPageUrl: {{ delays.prev_page_url|tojson|safe }},
+            rotateAfterMs: {{ delays.statistics_ms|tojson|safe }},
+        };
+    </script>
+    <script src="{{ url_for('static', filename='js/statistics.js') }}" defer></script>
+    {% include 'partials/kiosk_nav.j2.html' %}
+</head>
+<body class="stats-students">
+    <div id="loading-overlay" class="loading-overlay hidden" aria-hidden="true">
+        <div class="loading-spinner" role="status" aria-label="Caricamento"></div>
+    </div>
+
+    <main class="stats-page">
+        <header class="stats-header">
+            <div class="stats-header__title">
+                <h1>Statistiche</h1>
+                <p>Panoramica studenti{% if user_login %} — {{ user_login }}{% endif %}</p>
+            </div>
+        </header>
+
+        <div id="error-banner" class="error-banner" role="alert"></div>
+
+        <section class="charts-row students-charts-row" aria-label="Studenti">
+            <article class="panel">
+                <div class="panel__header">
+                    <h2>Provenienza</h2>
+                    <span>Paese di nascita</span>
+                </div>
+                <div class="chart-wrap">
+                    <canvas id="chart-origin" aria-label="Distribuzione provenienza studenti"></canvas>
+                </div>
+            </article>
+            <article class="panel">
+                <div class="panel__header">
+                    <h2>Età</h2>
+                    <span>Fasce d'età</span>
+                </div>
+                <div class="chart-wrap">
+                    <canvas id="chart-age" aria-label="Distribuzione età studenti"></canvas>
+                </div>
+            </article>
+            <article class="panel">
+                <div class="panel__header">
+                    <h2>Sesso</h2>
+                    <span>Anagrafica</span>
+                </div>
+                <div class="chart-wrap">
+                    <canvas id="chart-gender" aria-label="Distribuzione sesso studenti"></canvas>
+                </div>
+            </article>
+            <article class="panel">
+                <div class="panel__header">
+                    <h2>Cerchi</h2>
+                    <span>Common Core</span>
+                </div>
+                <div class="chart-wrap">
+                    <canvas id="chart-exam" aria-label="Distribuzione cerchi esame"></canvas>
+                </div>
+            </article>
+        </section>
+    </main>
+</body>
+</html>

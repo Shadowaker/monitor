@@ -128,28 +128,55 @@ body {
 
 .grids {
     display: flex;
+    flex-direction: row;
     flex: 1;
     gap: 1vw;
     overflow: auto;
     min-height: 0;
+    justify-content: center;
+    align-items: center;
 }
 
 .grid-box {
-    flex: 1;
+    flex: 1 1 0;
+    min-width: 0;
     background-color: var(--bg-surface);
     border-radius: 1rem;
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 }
 
 .grid-box>div:first-child {
-    font-size: 1.5rem;
+    font-size: clamp(1.75rem, 2.2vw, 2.5rem);
     font-weight: bold;
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     color: var(--text-muted);
+    width: 100%;
+}
+
+.cluster-grid {
+    display: grid;
+    grid-template-columns: 3.5vw repeat(8, 2.5vw);
+    grid-auto-rows: 2.5vw;
+    gap: 0.35em;
+    width: fit-content;
+    margin: 0 auto;
+    justify-items: center;
+    align-items: center;
+}
+
+.cellx,
+.label--hidden {
+    visibility: hidden;
+}
+
+.cellx {
+    width: 2.5vw;
+    height: 2.5vw;
 }
 
 .cluster-label-grid-3 {
@@ -233,8 +260,9 @@ body {
 }
 
 
-.label {
+.cluster-grid .label {
     color: var(--text-muted);
+    min-width: 0;
 }
 
 .info {
@@ -878,6 +906,11 @@ body {
         --cell-size: var(--cell-size-medium);
     }
 
+    .cluster-grid {
+        grid-template-columns: 3.2vw repeat(8, 2.5vw);
+        grid-auto-rows: 2.5vw;
+    }
+
     .cluster-label-grid-3 {
         grid-template-columns: auto 2.5vw 2.5vw 2.5vw 2.5vw 2.5vw 2.5vw 2.5vw 2.5vw;
         grid-template-rows: 2.5vw 2.5vw 2.5vw 2.5vw 2.5vw 2.5vw 2.5vw 2.5vw 2.5vw 2.5vw 2.5vw 2.5vw auto;
@@ -898,6 +931,16 @@ body {
 @media screen and (max-width: 1200px) {
     :root {
         --cell-size: var(--cell-size-large);
+    }
+
+    .cluster-grid {
+        grid-template-columns: 2.8vw repeat(8, 2vw);
+        grid-auto-rows: 2vw;
+    }
+
+    .cellx {
+        width: 2vw;
+        height: 2vw;
     }
 
     .cluster-label-grid-3 {
@@ -1007,6 +1050,27 @@ body {
 
     .info p {
         font-size: 0.9rem;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .cluster-grid {
+        grid-template-columns: 4.5vw repeat(8, 2.8vw);
+        grid-auto-rows: 2.8vw;
+    }
+
+    .cluster-grid .label {
+        font-size: clamp(1.25rem, 1.65vw, 2rem);
+    }
+
+    .cell,
+    .cellx {
+        width: 2.8vw;
+        height: 2.8vw;
+    }
+
+    .grid-box>div:first-child {
+        font-size: 2.5rem;
     }
 }
 

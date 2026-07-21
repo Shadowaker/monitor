@@ -1,0 +1,550 @@
+:root {
+    --bg-dark: #1e1e2f;
+    --bg-panel: #2a2a40;
+    --bg-box: #333350;
+    --bg-info: #444465;
+    --text-light: #ffffff;
+    --text-muted: #aaa;
+    --accent: #00babc;
+    --accent-dim: #04809f;
+    --success: #4caf82;
+    --warning: #e6a23c;
+    --danger: #e85d5d;
+    --border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    min-height: 100%;
+    background-color: var(--bg-dark);
+    font-family: "Segoe UI", system-ui, sans-serif;
+    color: var(--text-light);
+}
+
+.stats-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 3rem;
+}
+
+.stats-header {
+    margin-bottom: 1.75rem;
+}
+
+.stats-header__title h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.stats-header__title p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.kpi-bar-row {
+    display: grid;
+    grid-template-columns: minmax(200px, 260px) 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    align-items: stretch;
+    min-height: clamp(11rem, 18vh, 16rem);
+    height: auto;
+    max-height: none;
+    overflow: visible;
+}
+
+.kpi-bar-row .kpi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "online maintenance"
+        "offline available";
+    gap: 0.45rem;
+    height: 100%;
+    min-height: inherit;
+    max-height: none;
+    align-content: stretch;
+}
+
+.kpi-card[data-slot="online"] {
+    grid-area: online;
+}
+
+.kpi-card[data-slot="maintenance"] {
+    grid-area: maintenance;
+}
+
+.kpi-card[data-slot="offline"] {
+    grid-area: offline;
+}
+
+.kpi-card[data-slot="available"] {
+    grid-area: available;
+}
+
+.kpi-card {
+    background: var(--bg-box);
+    border-radius: 0.6rem;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.kpi-bar-row .kpi-card {
+    padding: 0.45rem 0.55rem;
+    border-radius: 0.45rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+}
+
+.kpi-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent);
+}
+
+.kpi-bar-row .kpi-card::before {
+    height: 2px;
+}
+
+.kpi-card--warning::before {
+    background: var(--warning);
+}
+
+.kpi-card--success::before,
+.kpi-card--online::before {
+    background: var(--accent);
+}
+
+.kpi-card--danger::before {
+    background: var(--danger);
+}
+
+.kpi-card--available::before {
+    background: var(--success);
+}
+
+.kpi-card__label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+    line-height: 1.2;
+}
+
+.kpi-bar-row .kpi-card__label {
+    font-size: 0.72rem;
+    margin-bottom: 0.15rem;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+}
+
+.kpi-card__value {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.kpi-bar-row .kpi-card__value {
+    font-size: 1.15rem;
+    line-height: 1.05;
+}
+
+.kpi-bar-row .panel--grouped-bars {
+    display: flex;
+    flex-direction: column;
+    min-height: inherit;
+    height: 100%;
+    max-height: none;
+    padding: 0.65rem 1rem 0.75rem;
+    border-radius: 0.65rem;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+}
+
+.kpi-bar-row .panel__header {
+    margin-bottom: 0.35rem;
+    flex-shrink: 0;
+}
+
+.kpi-bar-row .panel__header h2 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.kpi-bar-row .panel__header span {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.1rem;
+}
+
+.kpi-bar-row .chart-wrap.chart-wrap--grouped {
+    flex: 1;
+    height: auto;
+    min-height: 7.5rem;
+    max-height: none;
+    width: 100%;
+}
+
+.panel--grouped-bars {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.chart-wrap.chart-wrap--grouped {
+    flex: 1;
+    height: 156px;
+    min-height: 156px;
+    max-height: 156px;
+    width: 100%;
+}
+
+.kpi-card__delta {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.kpi-card__delta.positive {
+    color: var(--success);
+}
+
+.kpi-card__delta.negative {
+    color: var(--danger);
+}
+
+.charts-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.panel {
+    background: var(--bg-panel);
+    border-radius: 0.75rem;
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+}
+
+.panel__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.panel__header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.panel__header span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.chart-wrap {
+    position: relative;
+    height: 280px;
+}
+
+.charts-row .chart-wrap {
+    height: 320px;
+}
+
+#chart-origin,
+#chart-age,
+#chart-gender,
+#chart-grade,
+#chart-exam {
+    max-height: 100%;
+}
+
+.students-charts-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.students-charts-row .chart-wrap {
+    height: 300px;
+}
+
+body.stats-students {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    max-height: 100dvh;
+    overflow: hidden;
+}
+
+html:has(body.stats-students) {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+body.stats-students .stats-page {
+    max-width: none;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    padding: 0.5rem 0.5rem 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+body.stats-students .stats-header {
+    margin-bottom: 0.4rem;
+    flex-shrink: 0;
+}
+
+body.stats-students #error-banner {
+    margin: 0 0 0.35rem;
+    flex-shrink: 0;
+}
+
+body.stats-students .students-charts-row {
+    flex: 1 1 0;
+    min-height: 0;
+    margin: 0;
+    height: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    align-content: stretch;
+    align-items: stretch;
+}
+
+body.stats-students .students-charts-row .panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+    padding: 0.65rem 0.75rem 0.5rem;
+}
+
+body.stats-students .students-charts-row .panel__header {
+    margin-bottom: 0.35rem;
+    flex-shrink: 0;
+}
+
+body.stats-students .students-charts-row .chart-wrap {
+    flex: 1 1 0;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+}
+
+@media (max-width: 900px) {
+    .students-charts-row {
+        grid-template-columns: 1fr;
+    }
+
+    body.stats-students {
+        height: auto;
+        overflow: auto;
+    }
+
+    body.stats-students .stats-page {
+        height: auto;
+        min-height: 100dvh;
+    }
+
+    body.stats-students .students-charts-row {
+        grid-template-rows: none;
+    }
+
+    body.stats-students .students-charts-row .chart-wrap {
+        min-height: 260px;
+    }
+}
+
+.bottom-row.charts-row .chart-wrap {
+    height: 320px;
+}
+
+.chart-wrap canvas {
+    max-height: 100%;
+}
+
+.bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 900px) {
+    .bottom-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.data-table th,
+.data-table td {
+    text-align: left;
+    padding: 0.65rem 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.data-table th {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.data-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-badge--ok {
+    background: rgba(76, 175, 130, 0.2);
+    color: var(--success);
+}
+
+.status-badge--warn {
+    background: rgba(230, 162, 60, 0.2);
+    color: var(--warning);
+}
+
+.status-badge--err {
+    background: rgba(232, 93, 93, 0.2);
+    color: var(--danger);
+}
+
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 30, 47, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: opacity 0.2s;
+}
+
+.loading-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid var(--bg-info);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.error-banner {
+    background: rgba(232, 93, 93, 0.15);
+    border: 1px solid var(--danger);
+    color: #ffb4b4;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.error-banner.visible {
+    display: block;
+}
+
+@media (min-width: 1920px) {
+    .kpi-bar-row {
+        min-height: clamp(14rem, 22vh, 24rem);
+        grid-template-columns: minmax(240px, 300px) 1fr;
+        gap: 1rem;
+    }
+
+    .kpi-bar-row .kpi-card__label {
+        font-size: 0.9rem;
+    }
+
+    .kpi-bar-row .kpi-card__value {
+        font-size: 1.55rem;
+    }
+
+    .kpi-bar-row .panel__header h2 {
+        font-size: 1.35rem;
+    }
+
+    .kpi-bar-row .panel__header span {
+        font-size: 0.95rem;
+    }
+
+    .kpi-bar-row .chart-wrap.chart-wrap--grouped {
+        min-height: 10rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .kpi-bar-row {
+        grid-template-columns: 1fr;
+        height: auto;
+        max-height: none;
+        min-height: auto;
+    }
+
+    .kpi-bar-row .kpi-grid {
+        max-width: 100%;
+        max-height: none;
+        min-height: 9rem;
+    }
+
+    .kpi-bar-row .panel--grouped-bars {
+        max-height: none;
+        min-height: 10rem;
+    }
+}

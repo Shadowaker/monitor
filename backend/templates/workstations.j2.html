@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Postazioni — Monitor 42Roma</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/statistics.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/workstations.css') }}">
+  <script src="{{ url_for('static', filename='vendor/chart.umd.min.js') }}" defer></script>
+  <script>
+    window.StatisticsBootstrap = {
+      locationStats: {{ location_stats|default({})|tojson|safe }},
+      kpiItems: {{ kpi_items|default([])|tojson|safe }},
+      clusterGroupedBars: {{ cluster_grouped_bars|default({'labels': [], 'datasets': []})|tojson|safe }},
+    };
+    window.WorkstationsBootstrap = {
+      offlinePCs: {{ offline_pcs|tojson|safe }},
+      onlinePCs: {{ online_pcs|tojson|safe }},
+      maintenancePCs: {{ maintenance_pcs|tojson|safe }},
+      locationStats: {{ location_stats|default({})|tojson|safe }},
+      nextPageUrl: {{ delays.next_page_url|tojson|safe }},
+      rotateAfterMs: {{ delays.workstations_ms|tojson|safe }},
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/statistics.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/workstations-page.js') }}" defer></script>
+  {% include 'partials/kiosk_nav.j2.html' %}
+</head>
+<body class="workstations-body">
+  <header class="cc-stats-header">
+    <h1>Workstations</h1>
+    <p>Campus layout and real-time workstation availability</p>
+  </header>
+
+  <main class="workstations-page">
+    {% include 'partials/kpi_usage_row.j2.html' %}
+    <section class="workstations-map" aria-label="Mappa cluster">
+      {% include 'partials/cluster_map.j2.html' %}
+      {% if banner_visible %}
+      <div class="banner">
+        <div class="banner-content">{{ banner_text }}</div>
+      </div>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>

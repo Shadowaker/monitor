@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotazione Monitor — 42Roma</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/display_delays.css') }}">
+    <script>
+        window.DisplayDelaysPageCatalog = {{ page_catalog|tojson|safe }};
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Rotazione monitor</h1>
+            <a href="{{ url_for('staff_dashboard') }}" class="back-btn">Torna alla Dashboard</a>
+        </div>
+
+        {% if error %}
+        <div class="alert alert-error">{{ error }}</div>
+        {% endif %}
+
+        {% if saved %}
+        <div class="alert alert-success">Impostazioni salvate.</div>
+        {% endif %}
+
+        <form method="POST" class="delays-form">
+            <section class="form-section">
+                <h2>Ordine schermate</h2>
+                <p class="form-intro">
+                    Riordina, aggiungi o rimuovi le pagine del ciclo. Deve restare almeno una schermata.
+                </p>
+
+                <div class="cycle-order-wrap">
+                    <div class="cycle-order-head" aria-hidden="true">
+                        <span>#</span>
+                        <span>Schermata</span>
+                        <span>Durata</span>
+                        <span>Azioni</span>
+                    </div>
+
+                    <ol class="cycle-order-list" id="cycle-order-list">
+                        {% for item in cycle_items %}
+                        <li class="cycle-order-item" data-page-id="{{ item.id }}">
+                            <span class="cycle-order-item__index">{{ loop.index }}</span>
+                            <span class="cycle-order-item__label">{{ item.label }}</span>
+                            <span class="cycle-order-item__duration">{{ item.duration }}</span>
+                            <div class="cycle-order-item__actions">
+                                <button type="button" class="cycle-btn cycle-btn-up" title="Sposta su" aria-label="Sposta su">▲</button>
+                                <button type="button" class="cycle-btn cycle-btn-down" title="Sposta giù" aria-label="Sposta giù">▼</button>
+                                <button type="button" class="cycle-btn cycle-btn-remove" title="Rimuovi" aria-label="Rimuovi">✕</button>
+                            </div>
+                            <input type="hidden" name="cycle_order" value="{{ item.id }}">
+                        </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+
+                <div class="cycle-add-row">
+                    <label class="cycle-add-label" for="cycle-add-select">Aggiungi al ciclo</label>
+                    <div class="cycle-add-controls">
+                        <select id="cycle-add-select" class="form-control form-control--wide" aria-label="Aggiungi pagina"></select>
+                        <button type="button" id="cycle-add-btn" class="btn btn-secondary">Aggiungi</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <h2>Durata schermate</h2>
+                <p class="form-intro">
+                    Per Cerchi ed Eventi il totale dipende dal numero di step/slide.
+                </p>
+
+                <div class="delays-grid">
+                    {% for field in delay_fields %}
+                    <div class="form-group">
+                        <label for="{{ field.key }}">{{ field.label }}</label>
+                        <div class="input-row">
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="{{ field.key }}"
+                                name="{{ field.key }}"
+                                min="1"
+                                max="3600"
+                                step="1"
+                                value="{{ config[field.key] }}"
+                                required
+                            >
+                            <span class="input-suffix">s</span>
+                        </div>
+                        <p class="field-hint">{{ field.hint }}</p>
+                        {% if field.key == 'cc_step_seconds' %}
+                        <p class="field-computed">Totale pagina: {{ config.cc_total_seconds }}s (× {{ config.cc_ranks }} cerchi)</p>
+                        {% endif %}
+                        {% if field.key == 'events_slide_seconds' %}
+                        <p class="field-computed">Totale = valore × slide visibili sul monitor</p>
+                        {% endif %}
+                        {% if field.key == 'sponsors_seconds' %}
+                        <p class="field-computed">Totale pagina: {{ config.sponsors_seconds * sponsor_count }}s (× {{ sponsor_count }} sponsor)</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <button type="submit" class="btn btn-primary">Salva rotazione</button>
+        </form>
+
+        <section class="cycle-preview">
+            <h2>Anteprima ciclo</h2>
+            <ol>
+                {% for item in cycle_preview %}
+                <li>{{ item.label }} — {{ item.duration }}</li>
+                {% endfor %}
+                {% if config.cycle %}
+                <li class="cycle-preview-loop">↩ {{ kiosk_pages[config.cycle[0]].label }}</li>
+                {% endif %}
+            </ol>
+        </section>
+    </div>
+
+    <template id="cycle-row-template">
+        <li class="cycle-order-item" data-page-id="">
+            <span class="cycle-order-item__index">·</span>
+            <span class="cycle-order-item__label"></span>
+            <span class="cycle-order-item__duration">—</span>
+            <div class="cycle-order-item__actions">
+                <button type="button" class="cycle-btn cycle-btn-up" title="Sposta su" aria-label="Sposta su">▲</button>
+                <button type="button" class="cycle-btn cycle-btn-down" title="Sposta giù" aria-label="Sposta giù">▼</button>
+                <button type="button" class="cycle-btn cycle-btn-remove" title="Rimuovi" aria-label="Rimuovi">✕</button>
+            </div>
+            <input type="hidden" name="cycle_order" value="">
+        </li>
+    </template>
+
+    <script src="{{ url_for('static', filename='js/display-delays-page.js') }}?v=2" defer></script>
+</body>
+</html>

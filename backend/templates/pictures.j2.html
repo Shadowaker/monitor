@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foto — Monitor 42Roma</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/pictures.css') }}">
+  {% for src in pictures %}
+  <link rel="preload" as="image" href="{{ src }}">
+  {% endfor %}
+  <script>
+    window.PicturesBootstrap = {
+      nextPageUrl: {{ delays.next_page_url|tojson|safe }},
+      rotateAfterMs: {{ delays.pictures_ms|tojson|safe }},
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/pictures-page.js') }}" defer></script>
+  {% include 'partials/kiosk_nav.j2.html' %}
+</head>
+<body class="pictures-page">
+  <main class="pictures-grid pictures-grid--loading" aria-label="Galleria foto campus" aria-busy="true">
+    {% for src in pictures %}
+    <figure class="pictures-grid__cell">
+      <img src="{{ src }}" alt="" decoding="async" fetchpriority="high">
+    </figure>
+    {% endfor %}
+  </main>
+</body>
+</html>

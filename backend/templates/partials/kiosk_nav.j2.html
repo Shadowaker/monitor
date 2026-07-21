@@ -1,0 +1,8 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/kiosk-navigation.css') }}?v=2">
+<script>
+  window.KioskNavigation = Object.assign(window.KioskNavigation || {}, {
+    prevPageUrl: {{ delays.prev_page_url|tojson|safe }},
+    nextPageUrl: {{ delays.next_page_url|tojson|safe }},
+  });
+</script>
+<script src="{{ url_for('static', filename='js/kiosk-navigation.js') }}?v=16" defer></script>

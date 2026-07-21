@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>42Roma — Monitor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/splash.css') }}">
+  <script>
+    window.SplashBootstrap = {
+      nextPageUrl: {{ delays.next_page_url|tojson|safe }},
+      rotateAfterMs: {{ delays.splash_ms|tojson|safe }},
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/splash-page.js') }}" defer></script>
+  {% include 'partials/kiosk_nav.j2.html' %}
+</head>
+<body class="splash-page">
+  <main class="splash-main">
+    <img
+      class="splash-logo"
+      src="{{ url_for('static', filename='svg/42ROMA-under-black.svg') }}"
+      alt="42 Roma"
+      width="157"
+      height="137"
+    >
+  </main>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<section class="kpi-bar-row" aria-label="Panoramica e cluster">
+    <section id="kpi-grid" class="kpi-grid" aria-label="Indicatori principali">
+        <article class="kpi-card kpi-card--online" data-slot="online">
+            <div class="kpi-card__label">Utilizzate</div>
+            <div class="kpi-card__value">{{ location_stats.occupied|default(0) }}</div>
+        </article>
+        <article class="kpi-card kpi-card--warning" data-slot="maintenance">
+            <div class="kpi-card__label">Manutenzione</div>
+            <div class="kpi-card__value">{{ location_stats.maintenance|default(0) }}</div>
+        </article>
+        <article class="kpi-card kpi-card--danger" data-slot="offline">
+            <div class="kpi-card__label">Offline</div>
+            <div class="kpi-card__value">{{ location_stats.offline|default(0) }}</div>
+        </article>
+        <article class="kpi-card kpi-card--available" data-slot="available">
+            <div class="kpi-card__label">Disponibili</div>
+            <div class="kpi-card__value">{{ location_stats.available|default(0) }}</div>
+        </article>
+    </section>
+    <article class="panel panel--grouped-bars">
+        <div class="panel__header">
+            <h2>Utilizzo postazioni</h2>
+            <span>Per piano · postazioni utilizzate</span>
+        </div>
+        <div class="chart-wrap chart-wrap--grouped">
+            <canvas id="chart-cluster-grouped" aria-label="Grafico a barre raggruppate per cluster"></canvas>
+        </div>
+    </article>
+</section>

@@ -1,0 +1,446 @@
+:root {
+    --bg-dark: #1e1e2f;
+    --bg-panel: #2a2a40;
+    --accent: #00babc;
+    --accent-glow: #5ef0f2;
+    --text-light: #ffffff;
+    --text-muted: #aaa;
+    --ring-dim: rgba(0, 186, 188, 0.2);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+    height: 100%;
+    background: var(--bg-dark);
+    color: var(--text-light);
+    font-family: "Segoe UI", system-ui, sans-serif;
+    overflow: hidden;
+}
+
+.piscines-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.25rem 1.25rem;
+}
+
+.piscines-header { flex-shrink: 0; margin-bottom: 0.75rem; }
+.piscines-header h1 { font-size: 1.5rem; font-weight: 600; }
+.piscines-header p { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.15rem; }
+
+.piscines-main {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr minmax(300px, 380px);
+    gap: 1.25rem;
+}
+
+.piscines-funnel-wrap {
+    min-height: 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.piscines-funnel-block {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 0.35rem 0.25rem 0.5rem;
+}
+
+.piscines-funnel-stats {
+    flex-shrink: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.2rem;
+    margin-left: auto;
+    max-width: 26rem;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    color: var(--text-muted);
+    text-align: right;
+}
+
+.piscines-funnel-viz {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.55rem;
+}
+
+.piscines-funnel-stage-labels {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+}
+
+.piscines-funnel-stage-labels__cell {
+    position: relative;
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-glow);
+    padding: 0 0.35rem 0.45rem;
+}
+
+.piscines-funnel-stage-labels__cell:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 0.15rem;
+    right: 0;
+    width: 1px;
+    height: calc(100% - 0.15rem);
+    border-right: 1px dashed rgba(255, 255, 255, 0.22);
+}
+
+.piscines-funnel-chart-area {
+    position: relative;
+    width: 100%;
+    min-height: 14rem;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-top: 1.75rem;
+    padding-bottom: 1.85rem;
+}
+
+.piscines-funnel-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    min-height: 12rem;
+}
+
+.piscines-funnel-svg__value {
+    font-size: 42px;
+    font-weight: 700;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    pointer-events: none;
+}
+
+.piscines-funnel-svg__subtitle {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    pointer-events: none;
+}
+
+.piscines-funnel-hiring {
+    --hiring-start: 70%;
+    position: absolute;
+    top: 20%;
+    left: var(--hiring-start);
+    width: calc(100% - var(--hiring-start));
+    height: 60%;
+    pointer-events: none;
+}
+
+.piscines-funnel-hiring__title {
+    position: absolute;
+    top: -1.55rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent-glow);
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.piscines-funnel-hiring__box {
+    position: absolute;
+    inset: 0;
+    border: 2px dashed rgba(94, 240, 242, 0.75);
+    background: var(--ring-dim);
+    border-radius: 0.15rem;
+    box-shadow: 0 0 12px rgba(0, 186, 188, 0.15);
+}
+
+.piscines-funnel-hiring__note {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1.65rem;
+    text-align: center;
+    font-size: 0.68rem;
+    font-style: italic;
+    line-height: 1.25;
+    color: var(--text-muted);
+}
+
+.piscines-funnel-stage-details {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    margin-top: 1.35rem;
+}
+
+.piscines-funnel-stage-details__cell {
+    text-align: center;
+    padding: 0 0.45rem;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    line-height: 1.35;
+}
+
+.piscines-funnel-stage-details__count {
+    display: none;
+}
+
+.piscines-funnel-stage-details__title {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 0.2rem;
+}
+
+@media (min-width: 1920px) {
+    .piscines-funnel-stats {
+        font-size: 0.95rem;
+        gap: 0.25rem;
+    }
+
+    .piscines-funnel-stage-labels__cell {
+        font-size: 0.92rem;
+    }
+
+    .piscines-funnel-svg__value {
+        font-size: 50px;
+    }
+
+    .piscines-funnel-svg__subtitle {
+        font-size: 22px;
+    }
+
+    .piscines-funnel-hiring__title {
+        font-size: 0.82rem;
+        top: -1.75rem;
+    }
+
+    .piscines-funnel-hiring__note {
+        font-size: 0.78rem;
+        bottom: -1.85rem;
+    }
+
+    .piscines-funnel-stage-details__cell {
+        font-size: 0.82rem;
+    }
+
+    .piscines-funnel-stage-details__title {
+        font-size: 0.84rem;
+    }
+}
+
+.piscines-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.85rem;
+    min-height: 0;
+}
+
+.piscines-dates-panel,
+.piscines-apply-panel {
+    background: var(--bg-panel);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+}
+
+.piscines-dates-panel {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: 0.8rem 1rem 0.85rem;
+}
+
+.piscines-dates-panel h2,
+.piscines-apply-panel h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #5ef0f2;
+    margin-bottom: 0.75rem;
+}
+
+.piscines-dates-panel h2 {
+    flex-shrink: 0;
+    font-size: 0.95rem;
+    margin-bottom: 0.45rem;
+    line-height: 1.25;
+}
+
+.piscines-dates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 0.1rem;
+}
+
+.piscines-dates-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.piscines-dates-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.piscines-date-box {
+    width: 100%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.9rem 1rem;
+    background: rgba(0, 186, 188, 0.1);
+    border: 1px solid rgba(0, 186, 188, 0.32);
+    border-radius: 0.65rem;
+    text-align: center;
+    color: var(--text-light);
+}
+
+.piscines-date-box__label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #5ef0f2;
+    margin-bottom: 0.1rem;
+}
+
+.piscines-date-box__day {
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.piscines-date-box__year {
+    margin-top: 0.15rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--accent);
+}
+
+.piscines-date-box__countdown {
+    margin-top: 0.35rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 0.45rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+}
+
+.piscines-date-box__countdown--green {
+    color: #4caf82;
+    background: rgba(76, 175, 130, 0.15);
+    border: 1px solid rgba(76, 175, 130, 0.35);
+}
+
+.piscines-date-box__countdown--yellow {
+    color: #e6a23c;
+    background: rgba(230, 162, 60, 0.15);
+    border: 1px solid rgba(230, 162, 60, 0.35);
+}
+
+.piscines-date-box__countdown--red {
+    color: #e85d5d;
+    background: rgba(232, 93, 93, 0.15);
+    border: 1px solid rgba(232, 93, 93, 0.35);
+}
+
+.piscines-dates-empty {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.35;
+}
+
+@media (min-width: 1920px) {
+    .piscines-date-box {
+        gap: 0.5rem;
+        padding: 1rem 1.1rem;
+    }
+
+    .piscines-date-box__label {
+        font-size: 1rem;
+    }
+
+    .piscines-date-box__day {
+        font-size: 1.35rem;
+    }
+
+    .piscines-date-box__year {
+        font-size: 1.65rem;
+    }
+
+    .piscines-date-box__countdown {
+        font-size: 1rem;
+    }
+}
+
+.piscines-apply-panel {
+    flex-shrink: 0;
+    max-height: 300px;
+    min-height: 0;
+    padding: 0.85rem 1rem 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.piscines-apply-panel h2 {
+    flex-shrink: 0;
+    font-size: 0.95rem;
+    margin-bottom: 0.45rem;
+    line-height: 1.25;
+}
+
+.piscines-apply-url {
+    flex-shrink: 0;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.55rem;
+}
+
+.piscines-qr-wrap {
+    flex-shrink: 0;
+    background: #fff;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    line-height: 0;
+}
+
+.piscines-qr-wrap canvas,
+.piscines-qr-wrap img {
+    display: block;
+    width: 132px !important;
+    height: 132px !important;
+}

@@ -1,0 +1,36 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.splash-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #11a3c5 0%, #3749da 50%, #924c9d 100%);
+}
+
+.splash-main {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.splash-logo {
+    width: min(72vw, 42rem);
+    height: auto;
+    display: block;
+    filter: brightness(0) invert(1);
+}
+
+@media (min-width: 1920px) {
+    .splash-logo {
+        width: min(60vw, 52rem);
+    }
+}

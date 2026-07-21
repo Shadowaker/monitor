@@ -1,0 +1,55 @@
+:root {
+    --bg-dark: #1e1e2f;
+    --grid-gap: 0.4rem;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.pictures-page {
+    height: 100vh;
+    height: 100dvh;
+    background: var(--bg-dark);
+}
+
+.pictures-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: var(--grid-gap);
+    width: 100%;
+    height: 100%;
+    padding: var(--grid-gap);
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.pictures-grid--loading {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.pictures-grid__cell {
+    overflow: hidden;
+    border-radius: 0.35rem;
+    background: #2a2a40;
+    min-height: 0;
+    min-width: 0;
+}
+
+.pictures-grid__cell img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}

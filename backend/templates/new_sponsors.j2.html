@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuovi sponsor — Monitor 42Roma</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/new-sponsors.css') }}">
+</head>
+<body class="new-sponsors-page">
+  <main class="new-sponsors-main" aria-label="Nuovi sponsor">
+    <img
+      class="new-sponsors-main__logo"
+      src="{{ url_for('static', filename='svg/42ROMA-side-black.svg') }}"
+      alt="42 Roma"
+      width="232"
+      height="97"
+    >
+
+    <section class="new-sponsors-grid" aria-label="Loghi nuovi sponsor">
+      {% for logo in sponsor_logos %}
+      <article class="new-sponsors-card">
+        <div class="new-sponsors-card__inner">
+          <img src="{{ logo.src }}" alt="{{ logo.name }}" loading="lazy" decoding="async">
+        </div>
+      </article>
+      {% endfor %}
+    </section>
+  </main>
+</body>
+</html>

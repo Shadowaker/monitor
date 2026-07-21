@@ -83,7 +83,7 @@
     <div class="container">
         <div class="header">
             <h1>BDE Dashboard</h1>
-            <a href="{{ url_for('map') }}" class="back-btn">Torna alla Dashboard</a>
+            <a href="{{ url_for('workstations') }}" class="back-btn">Torna alla Dashboard</a>
         </div>
         <div class="dashboard-grid">
             <a href="{{ url_for('create_announcement') }}" class="dashboard-card">
@@ -97,6 +97,10 @@
             <a href="{{ url_for('staff_dashboard') }}" class="dashboard-card">
                 <h2>Staff Dashboard</h2>
                 <p>Accedi alla dashboard dello staff</p>
+            </a>
+            <a href="{{ url_for('statistics') }}" class="dashboard-card">
+                <h2>Statistiche</h2>
+                <p>Panoramica utilizzo postazioni, cluster e attività</p>
             </a>
         </div>
     </div>

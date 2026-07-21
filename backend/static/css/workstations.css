@@ -1,0 +1,78 @@
+html:has(.workstations-body),
+body.workstations-body {
+    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.workstations-body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.25rem 1.25rem;
+    overflow: hidden;
+    background-color: var(--bg-body, #1e1e2d);
+    color: var(--text-light, #ffffff);
+    font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.workstations-body .cc-stats-header {
+    flex-shrink: 0;
+    margin-bottom: 0.75rem;
+}
+
+.workstations-body .cc-stats-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.workstations-body .cc-stats-header p {
+    color: var(--text-muted, #aaa);
+    font-size: 0.9rem;
+    margin-top: 0.15rem;
+}
+
+.workstations-page {
+    flex: 1;
+    min-height: 0;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow: hidden;
+}
+
+.workstations-page .kpi-bar-row {
+    flex-shrink: 0;
+    margin-bottom: 0;
+    grid-template-columns: minmax(200px, 260px) 1fr;
+    min-height: clamp(11rem, 18vh, 16rem);
+}
+
+.workstations-map {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow: hidden;
+}
+
+.workstations-map .grids {
+    flex: 1;
+    min-height: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.workstations-map .banner {
+    flex-shrink: 0;
+}
+
+@media (min-width: 1920px) {
+    .workstations-body .cc-stats-header h1 {
+        font-size: 2rem;
+    }
+}

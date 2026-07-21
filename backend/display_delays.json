@@ -1,0 +1,21 @@
+{
+    "splash_seconds": 15,
+    "world_seconds": 30,
+    "piscines_seconds": 130,
+    "cc_step_seconds": 10,
+    "cc_ranks": 6,
+    "workstations_seconds": 30,
+    "statistics_seconds": 15,
+    "pictures_seconds": 30,
+    "sponsors_seconds": 5,
+    "events_slide_seconds": 15,
+    "cycle": [
+        "pictures",
+        "splash",
+        "world",
+        "piscines",
+        "cc",
+        "statistics",
+        "workstations"
+    ]
+}

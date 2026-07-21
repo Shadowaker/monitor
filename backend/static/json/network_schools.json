@@ -1,0 +1,358 @@
+{
+  "fetched_at": "2026-07-21T10:47:12.724800Z",
+  "source_url": "https://www.42network.org/42-schools/",
+  "schools": [
+    {
+      "name": "42 Abu Dhabi",
+      "country": "United Arab Emirates"
+    },
+    {
+      "name": "42 Amman",
+      "country": "Jordan"
+    },
+    {
+      "name": "Codam",
+      "country": "The Netherlands"
+    },
+    {
+      "name": "42 Angoulême",
+      "country": "France"
+    },
+    {
+      "name": "42 Antananarivo",
+      "country": "Madagascar"
+    },
+    {
+      "name": "42 Antwerp",
+      "country": "Belgium"
+    },
+    {
+      "name": "42 Bangkok",
+      "country": "Thailand"
+    },
+    {
+      "name": "42 Barcelona",
+      "country": "Spain"
+    },
+    {
+      "name": "42 Beirut",
+      "country": "Lebanon"
+    },
+    {
+      "name": "42 Belo Horizonte",
+      "country": "Brazil"
+    },
+    {
+      "name": "1337 Ben Guérir",
+      "country": "Morocco"
+    },
+    {
+      "name": "42 Berlin",
+      "country": "Germany"
+    },
+    {
+      "name": "42 Brussels",
+      "country": "Belgium"
+    },
+    {
+      "name": "42 Firenze",
+      "country": "Italy"
+    },
+    {
+      "name": "42 Gyeongsan",
+      "country": "South Korea"
+    },
+    {
+      "name": "42 Heilbronn",
+      "country": "Germany"
+    },
+    {
+      "name": "42 Irbid",
+      "country": "Jordan"
+    },
+    {
+      "name": "42 Iskandar Puteri",
+      "country": "Malaysia"
+    },
+    {
+      "name": "42 Istanbul",
+      "country": "Turkey"
+    },
+    {
+      "name": "1337 Khouribga",
+      "country": "Morocco"
+    },
+    {
+      "name": "42 Kocaeli",
+      "country": "Turkey"
+    },
+    {
+      "name": "42 Kuala Lumpur",
+      "country": "Malaysia"
+    },
+    {
+      "name": "42 Lausanne",
+      "country": "Switzerland"
+    },
+    {
+      "name": "42 Le Havre",
+      "country": "France"
+    },
+    {
+      "name": "42 Lisboa",
+      "country": "Portugal"
+    },
+    {
+      "name": "42 London",
+      "country": "United Kingdom"
+    },
+    {
+      "name": "42 Luanda",
+      "country": "Angola"
+    },
+    {
+      "name": "42 Luxembourg",
+      "country": "Luxembourg"
+    },
+    {
+      "name": "42 Lyon",
+      "country": "France"
+    },
+    {
+      "name": "42 Madrid",
+      "country": "Spain"
+    },
+    {
+      "name": "42 Málaga",
+      "country": "Spain"
+    },
+    {
+      "name": "42 Marseille",
+      "country": "France"
+    },
+    {
+      "name": "42 Milano",
+      "country": "Italy"
+    },
+    {
+      "name": "42 Mulhouse",
+      "country": "France"
+    },
+    {
+      "name": "42 Nablus",
+      "country": "Palestine"
+    },
+    {
+      "name": "42 Nice",
+      "country": "France"
+    },
+    {
+      "name": "42 Paris",
+      "country": "France"
+    },
+    {
+      "name": "42 Penang",
+      "country": "Malaysia"
+    },
+    {
+      "name": "42 Perpignan",
+      "country": "France"
+    },
+    {
+      "name": "42 Porto",
+      "country": "Portugal"
+    },
+    {
+      "name": "42 Prague",
+      "country": "Czech Republic"
+    },
+    {
+      "name": "42 Québec",
+      "country": "Canada"
+    },
+    {
+      "name": "1337 &#8211; Rabat",
+      "country": "Morocco"
+    },
+    {
+      "name": "42 Rio",
+      "country": "Brazil"
+    },
+    {
+      "name": "42 Roma",
+      "country": "Italy"
+    },
+    {
+      "name": "42 São Paulo",
+      "country": "Brazil"
+    },
+    {
+      "name": "42 Seoul",
+      "country": "South Korea"
+    },
+    {
+      "name": "42 Singapore",
+      "country": "Singapore"
+    },
+    {
+      "name": "1337 Med",
+      "country": "Morocco"
+    },
+    {
+      "name": "42 Tirana",
+      "country": "Albania"
+    },
+    {
+      "name": "42 Tokyo",
+      "country": "Japan"
+    },
+    {
+      "name": "42 Urduliz",
+      "country": "Spain"
+    },
+    {
+      "name": "42 Vienna",
+      "country": "Austria"
+    },
+    {
+      "name": "42 Warsaw",
+      "country": "Poland"
+    },
+    {
+      "name": "42 Wels",
+      "country": "Austria"
+    },
+    {
+      "name": "42 Wolfsburg",
+      "country": "Germany"
+    },
+    {
+      "name": "42 Yerevan",
+      "country": "Armenia"
+    },
+    {
+      "name": "42 Zürich",
+      "country": "Switzerland"
+    }
+  ],
+  "by_country": {
+    "Albania": [
+      "42 Tirana"
+    ],
+    "Angola": [
+      "42 Luanda"
+    ],
+    "Armenia": [
+      "42 Yerevan"
+    ],
+    "Austria": [
+      "42 Vienna",
+      "42 Wels"
+    ],
+    "Belgium": [
+      "42 Antwerp",
+      "42 Brussels"
+    ],
+    "Brazil": [
+      "42 Belo Horizonte",
+      "42 Rio",
+      "42 São Paulo"
+    ],
+    "Canada": [
+      "42 Québec"
+    ],
+    "Czech Republic": [
+      "42 Prague"
+    ],
+    "France": [
+      "42 Angoulême",
+      "42 Le Havre",
+      "42 Lyon",
+      "42 Marseille",
+      "42 Mulhouse",
+      "42 Nice",
+      "42 Paris",
+      "42 Perpignan"
+    ],
+    "Germany": [
+      "42 Berlin",
+      "42 Heilbronn",
+      "42 Wolfsburg"
+    ],
+    "Italy": [
+      "42 Firenze",
+      "42 Milano",
+      "42 Roma"
+    ],
+    "Japan": [
+      "42 Tokyo"
+    ],
+    "Jordan": [
+      "42 Amman",
+      "42 Irbid"
+    ],
+    "Lebanon": [
+      "42 Beirut"
+    ],
+    "Luxembourg": [
+      "42 Luxembourg"
+    ],
+    "Madagascar": [
+      "42 Antananarivo"
+    ],
+    "Malaysia": [
+      "42 Iskandar Puteri",
+      "42 Kuala Lumpur",
+      "42 Penang"
+    ],
+    "Morocco": [
+      "1337 &#8211; Rabat",
+      "1337 Ben Guérir",
+      "1337 Khouribga",
+      "1337 Med"
+    ],
+    "Palestine": [
+      "42 Nablus"
+    ],
+    "Poland": [
+      "42 Warsaw"
+    ],
+    "Portugal": [
+      "42 Lisboa",
+      "42 Porto"
+    ],
+    "Singapore": [
+      "42 Singapore"
+    ],
+    "South Korea": [
+      "42 Gyeongsan",
+      "42 Seoul"
+    ],
+    "Spain": [
+      "42 Barcelona",
+      "42 Madrid",
+      "42 Málaga",
+      "42 Urduliz"
+    ],
+    "Switzerland": [
+      "42 Lausanne",
+      "42 Zürich"
+    ],
+    "Thailand": [
+      "42 Bangkok"
+    ],
+    "The Netherlands": [
+      "Codam"
+    ],
+    "Turkey": [
+      "42 Istanbul",
+      "42 Kocaeli"
+    ],
+    "United Arab Emirates": [
+      "42 Abu Dhabi"
+    ],
+    "United Kingdom": [
+      "42 London"
+    ]
+  }
+}

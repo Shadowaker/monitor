@@ -1,0 +1,253 @@
+:root {
+    --bg-dark: #1e1e2f;
+    --bg-panel: #2a2a40;
+    --accent: #00babc;
+    --accent-glow: #5ef0f2;
+    --text-light: #ffffff;
+    --text-muted: #aaa;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+    background: var(--bg-dark);
+    color: var(--text-light);
+    font-family: "Segoe UI", system-ui, sans-serif;
+    overflow: hidden;
+}
+
+.world-stats-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 1rem 0.75rem;
+    overflow: hidden;
+}
+
+.world-stats-main {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(180px, 220px) minmax(0, 1fr) minmax(180px, 220px);
+    gap: 0.75rem;
+    align-items: start;
+}
+
+.world-stats-center {
+    min-width: 0;
+    min-height: 0;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.world-stats-header {
+    flex-shrink: 0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.35rem;
+}
+
+.world-stats-header h1 {
+    font-size: 1.35rem;
+    font-weight: 600;
+}
+
+.world-stats-header p {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 0.1rem;
+}
+
+.world-stats-main--fullscreen {
+    grid-template-columns: 1fr;
+    gap: 0;
+}
+
+.world-stats-main--fullscreen .world-stats-center {
+    height: 100%;
+}
+
+.world-stats-main--fullscreen .world-stats-svg-wrap {
+    width: 100%;
+    flex: 1;
+    padding: 10px;
+}
+
+.world-stats-svg-wrap {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+}
+
+.world-stats-svg-wrap svg {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+
+.world-stats-main--fullscreen .world-stats-svg-wrap {
+    padding: 6px 4px;
+}
+
+.world-stats-main--fullscreen .world-stats-svg-wrap svg {
+    width: 100%;
+    max-height: calc(100vh - 4rem);
+}
+
+.world-stats-schools-column {
+    min-height: 0;
+    min-width: 0;
+    max-height: 100%;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.45rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 0.1rem;
+}
+
+.world-stats-schools-column::-webkit-scrollbar {
+    width: 4px;
+}
+
+.world-stats-schools-column::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.world-stats-continent-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.world-stats-continent-group__title {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    padding: 0.1rem 0.15rem 0;
+}
+
+.world-stats-schools-empty {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    line-height: 1.35;
+    padding: 0.25rem 0.15rem;
+}
+
+.world-stats-country-panel {
+    flex-shrink: 0;
+    background: var(--bg-panel);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 0.45rem;
+    padding: 0.35rem 0.45rem 0.4rem;
+}
+
+.world-stats-country-panel h3 {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+}
+
+.world-stats-campus-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.2rem;
+}
+
+.world-stats-campus-list li {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    padding: 0.2rem 0.3rem;
+    background: rgba(0, 186, 188, 0.06);
+    border: 1px solid rgba(0, 186, 188, 0.16);
+    border-radius: 0.3rem;
+    font-size: 0.62rem;
+    line-height: 1.2;
+}
+
+.world-stats-campus-list__name {
+    flex: 1;
+    min-width: 0;
+    font-weight: 600;
+    color: var(--text-light);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.world-stats-svg-wrap path.world-campus-country {
+    transition: fill 0.35s ease;
+}
+
+.world-stats-svg-wrap .world-campus-marker circle {
+    fill: var(--accent);
+    stroke: var(--accent-glow);
+    stroke-width: 2;
+    filter: drop-shadow(0 0 6px var(--accent)) drop-shadow(0 0 14px rgba(0, 186, 188, 0.55));
+}
+
+.world-stats-svg-wrap .world-campus-marker text {
+    fill: #1e1e2f;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    font-weight: 700;
+    pointer-events: none;
+    user-select: none;
+}
+
+@media (min-width: 1920px) {
+    .world-stats-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .world-stats-header p {
+        font-size: 0.85rem;
+    }
+
+    .world-stats-main {
+        grid-template-columns: minmax(200px, 240px) minmax(0, 1fr) minmax(200px, 240px);
+        gap: 1rem;
+    }
+
+    .world-stats-country-panel h3 {
+        font-size: 0.72rem;
+    }
+
+    .world-stats-campus-list li {
+        font-size: 0.66rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .world-stats-main {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 1fr) auto auto;
+    }
+
+    .world-stats-schools-column {
+        max-height: 24vh;
+    }
+}

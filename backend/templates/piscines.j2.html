@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piscine — Monitor 42Roma</title>
+  <script src="{{ url_for('static', filename='vendor/qrcode.min.js') }}" defer></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/piscines.css') }}">
+  <script>
+    window.PiscinesBootstrap = {
+      applyUrl: "https://apply.42roma.it/",
+      funnelLabels: ["Test online", "Piscine", "Common Core", "Advanced Core"],
+      funnelChartData: {{ funnel_chart_data|tojson|safe }},
+      funnelDisplayCounts: {{ funnel_display_counts|tojson|safe }},
+      funnelStats: {{ funnel_stats|tojson|safe }},
+      nextPageUrl: {{ delays.next_page_url|tojson|safe }},
+      rotateAfterMs: {{ delays.piscines_ms|tojson|safe }},
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/piscines-page.js') }}" defer></script>
+  {% include 'partials/kiosk_nav.j2.html' %}
+</head>
+<body class="piscines-page">
+  <header class="piscines-header">
+    <h1>Percorso 42</h1>
+    <p>Le fasi del cursus — dalla selezione all'Advanced Core</p>
+  </header>
+
+  <main class="piscines-main">
+    <section class="piscines-funnel-wrap" aria-label="Fasi del percorso 42">
+      <div class="piscines-funnel-block" id="piscines-funnel-block">
+        <ul class="piscines-funnel-stats" id="piscines-funnel-stats" aria-label="Statistiche del percorso"></ul>
+
+        <div class="piscines-funnel-viz">
+          <div class="piscines-funnel-stage-labels" id="piscines-funnel-stage-labels"></div>
+
+          <div class="piscines-funnel-chart-area">
+            <svg
+              id="piscines-funnel-svg"
+              class="piscines-funnel-svg"
+              viewBox="-284.042 -144.94 914.057 394.441"
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden="true"
+            ></svg>
+            <div class="piscines-funnel-hiring" aria-label="Inserimento lavorativo">
+              <p class="piscines-funnel-hiring__title">Inserimento lavorativo</p>
+              <div class="piscines-funnel-hiring__box"></div>
+              <p class="piscines-funnel-hiring__note">
+                Tutti coloro che terminano il CC diventano alumni 42 per tutta la vita
+              </p>
+            </div>
+          </div>
+
+          <div class="piscines-funnel-stage-details" id="piscines-funnel-stage-details"></div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="piscines-sidebar">
+      <article class="piscines-dates-panel">
+        <h2>Le date delle prossime Piscine</h2>
+        {% if piscine_sessions %}
+        <div class="piscines-dates-list">
+          {% for session in piscine_sessions %}
+          <article class="piscines-date-box">
+            <p class="piscines-date-box__label">{{ session.label }}</p>
+            <p class="piscines-date-box__day">{{ session.start_day }} {{ session.start_month }}</p>
+            <p class="piscines-date-box__day">{{ session.end_day }} {{ session.end_month }}</p>
+            <p class="piscines-date-box__year">{{ session.year }}</p>
+            <p class="piscines-date-box__countdown piscines-date-box__countdown--{{ session.countdown_tier }}">
+              {{ session.countdown_text }}
+            </p>
+          </article>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="piscines-dates-empty">Date non disponibili al momento.</p>
+        {% endif %}
+      </article>
+
+      <article class="piscines-apply-panel">
+        <h2>Iscriviti</h2>
+        <p class="piscines-apply-url">apply.42roma.it</p>
+        <div class="piscines-qr-wrap">
+          <div id="piscines-apply-qr" class="piscines-qr" aria-label="QR code per apply.42roma.it"></div>
+        </div>
+      </article>
+    </aside>
+  </main>
+</body>
+</html>

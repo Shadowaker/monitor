@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Common Core — Monitor 42Roma</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/statistics.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/statistics-cc.css') }}">
+  <script src="{{ url_for('static', filename='vendor/chart.umd.min.js') }}" defer></script>
+  <script>
+    window.CcStatisticsBootstrap = {
+      rankCounts: {{ rank_counts|tojson|safe }},
+      stepDurationMs: {{ delays.cc_step_ms|tojson|safe }},
+      ranks: [1, 2, 3, 4, 5, 6],
+      showMastery: {{ cc_show_mastery|tojson|safe }},
+      masteryFullyVisible: {{ cc_mastery_visible|tojson|safe }},
+      fullViewBox: {{ cc_full_viewbox|tojson|safe }},
+      ccOnlyViewBox: {{ cc_only_viewbox|tojson|safe }},
+      nextPageUrl: {{ delays.next_page_url|tojson|safe }},
+      prevPageUrl: {{ delays.prev_page_url|tojson|safe }},
+      backNavStartFromEnd: {{ cc_back_nav_start_from_end|tojson|safe }},
+    };
+    window.StatisticsBootstrap = {
+      studentGradeChart: {{ student_grade_chart|default({'labels': [], 'values': []})|tojson|safe }},
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/statistics.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/statistics-cc.js') }}" defer></script>
+  {% include 'partials/kiosk_nav.j2.html' %}
+</head>
+<body class="cc-stats-page{% if cc_show_mastery and cc_mastery_visible %} cc-stats-page--mastery-full{% elif cc_show_mastery %} cc-stats-page--mastery-partial{% endif %}{% if not cc_sidebar_right %} cc-stats-page--sidebar-left{% endif %}{% if cc_footnote_mark_neon %} cc-stats-page--footnote-mark-neon{% endif %}{% if not cc_footnote_below %} cc-stats-page--footnote-above{% endif %}{% if cc_intro_neon %} cc-stats-page--intro-neon{% endif %}{% if not cc_intro_below %} cc-stats-page--intro-above{% endif %}">
+  <header class="cc-stats-header">
+    <h1>Il percorso formativo "Common Core"</h1>
+    <p id="cc-rank-subtitle">Ultimo esame superato · cursus 42</p>
+  </header>
+
+  <main class="cc-stats-main">
+    <div class="cc-stats-svg-wrap" id="cc-svg-root" aria-label="Mappa cerchi campus">
+      {{ svg_content|safe }}
+    </div>
+
+    <aside class="cc-stats-sidebar">
+      <div class="cc-stats-panel" aria-live="polite">
+        <p class="cc-stats-panel__label">Cerchio attivo</p>
+        <h2 class="cc-stats-panel__rank" id="cc-rank-title">—</h2>
+        <p class="cc-stats-panel__count" id="cc-rank-count">—</p>
+        <ul class="cc-stats-legend" id="cc-rank-legend"></ul>
+      </div>
+
+      <article class="panel cc-stats-grade-panel">
+        <div class="panel__header">
+          <h2>Grade</h2>
+          <span>Cursus 42</span>
+        </div>
+        <div class="chart-wrap chart-wrap--grade-cc">
+          <canvas id="chart-grade" aria-label="Distribuzione grade studenti"></canvas>
+        </div>
+        <p class="cc-grade-footnote">
+          <span class="cc-grade-footnote__mark">*</span>
+          Gli Alumni sono studenti che hanno finito il Common Core e hanno accesso a tutti i campus del mondo e possono usare i campus come coworking.
+          Restano studenti e possono consegnare i progetti dell'Advanced Core.
+        </p>
+      </article>
+    </aside>
+  </main>
+
+  <p class="cc-stats-intro">
+    Il Common Core è il percorso formativo condiviso da tutti i campus 42 nel mondo: 28 progetti progressivi e 5 esami distribuiti su 6 cerchi di difficoltà crescente. Ogni studente avanza al proprio ritmo — in media tra 8 e 24 mesi — superando progetti ed esami per sbloccare il cerchio successivo fino al termine del cursus.
+  </p>
+</body>
+</html>

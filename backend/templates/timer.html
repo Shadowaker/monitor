@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: 'Share Tech Mono', 'Courier New', monospace;
+    }
+
+    /* Layer 1 – gradiente di sfondo */
+    #bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    /* Layer 2 – canvas Tetris */
+    #tetris-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Layer 3 – UI timer */
+    .ui {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      pointer-events: none;
+    }
+
+    .ring-container {
+      position: relative;
+      width: min(62vw, 62vh, 560px);
+      height: min(62vw, 62vh, 560px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    svg.ring {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .ring-track {
+      fill: none;
+      stroke: rgba(255,255,255,0.12);
+      stroke-width: 10;
+    }
+
+    .ring-fill {
+      fill: none;
+      stroke: rgba(255,255,255,0.8);
+      stroke-width: 10;
+      stroke-linecap: round;
+    }
+
+    #timer-display {
+      font-size: clamp(3.5rem, 11vw, 9rem);
+      color: #fff;
+      letter-spacing: 0.04em;
+      text-shadow:
+        0 0 60px rgba(255,255,255,0.6),
+        0 3px 14px rgba(0,0,0,0.7);
+      z-index: 1;
+      user-select: none;
+    }
+
+    #status-label {
+      margin-top: 2.5rem;
+      font-size: clamp(0.8rem, 1.8vw, 1.3rem);
+      color: rgba(255,255,255,0.88);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.7);
+      user-select: none;
+    }
+
+    #progress-wrap {
+      margin-top: 3rem;
+      width: min(58vw, 460px);
+      height: 5px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    #progress-fill {
+      height: 100%;
+      background: rgba(255,255,255,0.7);
+      border-radius: 99px;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        text-shadow: 0 0 60px rgba(255,255,255,0.6), 0 3px 14px rgba(0,0,0,0.7);
+      }
+      50% {
+        text-shadow:
+          0 0 100px rgba(255,160,160,0.9),
+          0 0  30px rgba(255, 60, 60,0.7),
+          0 3px 14px rgba(0,0,0,0.7);
+      }
+    }
+
+    #timer-display.pulsing { animation: pulse-glow 1.5s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+  <div id="bg"></div>
+  <canvas id="tetris-canvas"></canvas>
+
+  <div class="ui">
+    <div class="ring-container">
+      <svg class="ring" viewBox="0 0 440 440">
+        <circle class="ring-track" cx="220" cy="220" r="200"/>
+        <circle class="ring-fill"  id="ring-fill" cx="220" cy="220" r="200"/>
+      </svg>
+      <div id="timer-display">--:--:--</div>
+  </div>
+
+    <div id="status-label">In attesa delle {{ start_hour }}:00</div>
+
+    <div id="progress-wrap">
+      <div id="progress-fill"></div>
+    </div>
+  </div>
+
+  <script>
+    // ── Valori iniettati da Flask ─────────────────────────────
+    // const IS_EXAM_DAY  = {{ 'true' if is_exam_day else 'false' }};
+    // const NEXT_EXAM    = {{ ('"' ~ next_exam ~ '"') if next_exam else 'null' }};
+    // const START_HOUR   = {{ start_hour }};
+
+    // ── Timer constants ───────────────────────────────────────
+    const TOTAL = 4*3600;
+    const MID   = 2*3600;
+    // const TOTAL = {{ total_seconds }};
+    // const MID   = {{ mid_seconds }};
+
+    const C_GREEN  = [22,  120,  55];
+    const C_YELLOW = [175,  85,   5];
+    const C_RED    = [148,  22,  22];
+
+    const CIRC = 2 * Math.PI * 200;
+
+    const bgEl    = document.getElementById('bg');
+    const ringEl  = document.getElementById('ring-fill');
+    const timerEl = document.getElementById('timer-display');
+    const labelEl = document.getElementById('status-label');
+    const barEl   = document.getElementById('progress-fill');
+
+    ringEl.style.strokeDasharray  = CIRC;
+    ringEl.style.strokeDashoffset = CIRC;
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function easeInOut(t)  { return t < 0.5 ? 2*t*t : -1 + (4 - 2*t)*t; }
+
+    function colorAt(rem) {
+      if (rem >= TOTAL) return C_GREEN;
+      if (rem <= 0)     return C_RED;
+      if (rem >= MID) {
+        const t = easeInOut((TOTAL - rem) / (TOTAL - MID));
+        return C_GREEN.map((c, i) => Math.round(lerp(c, C_YELLOW[i], t)));
+      }
+      const t = easeInOut((MID - rem) / MID);
+      return C_YELLOW.map((c, i) => Math.round(lerp(c, C_RED[i], t)));
+    }
+
+    function brighten(rgb, amt) { return rgb.map(c => Math.min(255, c + amt)); }
+    function toRgb([r,g,b])     { return `rgb(${r},${g},${b})`; }
+
+    function formatTime(s) {
+      s = Math.max(0, Math.ceil(s));
+      return [Math.floor(s/3600), Math.floor((s%3600)/60), s%60]
+        .map(v => String(v).padStart(2,'0')).join(':');
+    }
+
+    function getTimerState() {
+      // if (!IS_EXAM_DAY) return { state: 'no-exam', rem: TOTAL };
+      const now   = new Date();
+      const start = new Date(now);
+      start.setHours(14, 0, 0, 0);
+      const el = (now - start) / 1000;
+      if (el < 0)      return { state: 'idle',    rem: TOTAL };
+      if (el >= TOTAL) return { state: 'done',    rem: 0 };
+      return                  { state: 'running', rem: TOTAL - el };
+    }
+
+    // ── Tetris engine ─────────────────────────────────────────
+    const canvas = document.getElementById('tetris-canvas');
+    const ctx    = canvas.getContext('2d');
+    const CELL   = 30;
+
+    let cols, rows, board, pieces;
+
+    function initGrid() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+      cols  = Math.ceil(canvas.width  / CELL) + 1;
+      rows  = Math.ceil(canvas.height / CELL) + 1;
+      board  = Array.from({length: rows}, () => Array(cols).fill(null));
+      pieces = [];
+    }
+
+    window.addEventListener('resize', initGrid);
+    initGrid();
+
+    // Classic tetromino shapes + colors
+    const SHAPES = [
+      { cells: [[1,1,1,1]],             color: '#00e5ff' }, // I – cyan
+      { cells: [[1,1],[1,1]],            color: '#ffd600' }, // O – yellow
+      { cells: [[0,1,0],[1,1,1]],        color: '#d500f9' }, // T – purple
+      { cells: [[0,1,1],[1,1,0]],        color: '#76ff03' }, // S – lime
+      { cells: [[1,1,0],[0,1,1]],        color: '#ff1744' }, // Z – red
+      { cells: [[1,0,0],[1,1,1]],        color: '#2979ff' }, // J – blue
+      { cells: [[0,0,1],[1,1,1]],        color: '#ff6d00' }, // L – orange
+    ];
+
+    function rotate(s) {
+      return Array.from({length: s[0].length}, (_, c) =>
+        Array.from({length: s.length},    (_, r) => s[s.length - 1 - r][c])
+      );
+    }
+
+    // State for row-clear flash
+    let flashRows  = [];
+    let flashTimer = 0;
+    const FLASH_DUR = 0.3;
+
+    // State for board-overflow wipe
+    let wiping    = false;
+    let wipeTimer = 0;
+    const WIPE_DUR = 0.55;
+
+    // Piece spawning
+    const MAX_PIECES = 10;
+    let spawnTimer   = 0;
+    const SPAWN_INTV = 0.35;
+
+    function canPlace(shape, x, yInt) {
+      for (let r = 0; r < shape.length; r++) {
+        for (let c = 0; c < shape[r].length; c++) {
+          if (!shape[r][c]) continue;
+          const gx = x + c, gy = yInt + r;
+          if (gx < 0 || gx >= cols || gy >= rows) return false;
+          if (gy >= 0 && board[gy][gx])            return false;
+        }
+      }
+      return true;
+    }
+
+    function spawnPiece() {
+      const def  = SHAPES[Math.floor(Math.random() * SHAPES.length)];
+      let shape  = def.cells;
+      const rots = Math.floor(Math.random() * 4);
+      for (let i = 0; i < rots; i++) shape = rotate(shape);
+      const x = Math.floor(Math.random() * Math.max(1, cols - shape[0].length));
+      if (!canPlace(shape, x, -shape.length)) return null;
+      return {
+        shape,
+        color : def.color,
+        x,
+        yFrac : -shape.length,
+        speed : 3 + Math.random() * 5,
+      };
+    }
+
+    function settle(piece) {
+      const yInt = Math.floor(piece.yFrac);
+      for (let r = 0; r < piece.shape.length; r++) {
+        for (let c = 0; c < piece.shape[r].length; c++) {
+          if (!piece.shape[r][c]) continue;
+          const gx = piece.x + c, gy = yInt + r;
+          if (gy >= 0 && gy < rows) board[gy][gx] = piece.color;
+        }
+      }
+
+      // Full rows
+      const full = [];
+      for (let r = 0; r < rows; r++) {
+        if (board[r].every(c => c !== null)) full.push(r);
+      }
+      if (full.length) { flashRows = full; flashTimer = FLASH_DUR; }
+
+      // Overflow check: if top 3 rows have any settled blocks → wipe
+      for (let r = 0; r < 3; r++) {
+        if (board[r].some(c => c !== null)) { wiping = true; wipeTimer = WIPE_DUR; break; }
+      }
+    }
+
+    function applyClears() {
+      const kept  = board.filter((_, r) => !flashRows.includes(r));
+      const empty = Array.from({length: flashRows.length}, () => Array(cols).fill(null));
+      board      = [...empty, ...kept];
+      flashRows  = [];
+    }
+
+    // Draw one grid cell with a 3D bevel look
+    function drawCell(gx, gy, color, alpha) {
+      const px = gx * CELL, py = gy * CELL;
+      ctx.globalAlpha = alpha;
+
+      ctx.fillStyle = color;
+      ctx.fillRect(px + 1, py + 1, CELL - 2, CELL - 2);
+
+      // Top / left highlight
+      ctx.fillStyle = 'rgba(255,255,255,0.38)';
+      ctx.fillRect(px + 2, py + 2, CELL - 4, 3);
+      ctx.fillRect(px + 2, py + 2, 3, CELL - 4);
+
+      // Bottom / right shadow
+      ctx.fillStyle = 'rgba(0,0,0,0.30)';
+      ctx.fillRect(px + 2,        py + CELL - 5, CELL - 4, 3);
+      ctx.fillRect(px + CELL - 5, py + 2,        3, CELL - 4);
+
+      ctx.globalAlpha = 1;
+    }
+
+    function drawTetris(now) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Wipe flash overlay
+      if (wiping) {
+        const f = (Math.sin(now / 40) + 1) / 2;
+        ctx.globalAlpha = 0.28 * f;
+        ctx.fillStyle   = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.globalAlpha = 1;
+      }
+
+      // Settled board
+      for (let r = 0; r < rows; r++) {
+        const flashing = flashRows.includes(r);
+        for (let c = 0; c < cols; c++) {
+          if (!board[r][c]) continue;
+          const alpha = flashing
+            ? 0.4 + 0.6 * ((Math.sin(now / 45) + 1) / 2)
+            : 0.68;
+          drawCell(c, r, board[r][c], alpha);
+        }
+      }
+
+      // Falling pieces
+      for (const p of pieces) {
+        const yInt = Math.floor(p.yFrac);
+        for (let r = 0; r < p.shape.length; r++) {
+          for (let c = 0; c < p.shape[r].length; c++) {
+            if (!p.shape[r][c]) continue;
+            const gr = yInt + r;
+            if (gr >= 0) drawCell(p.x + c, gr, p.color, 0.88);
+          }
+        }
+      }
+    }
+
+    function updateTetris(dt) {
+      // Board wipe in progress
+      if (wiping) {
+        wipeTimer -= dt;
+        if (wipeTimer <= 0) {
+          board  = Array.from({length: rows}, () => Array(cols).fill(null));
+          pieces = [];
+          wiping = false;
+        }
+        return;
+      }
+
+      // Row-clear flash in progress
+      if (flashRows.length) {
+        flashTimer -= dt;
+        if (flashTimer <= 0) applyClears();
+        return;
+      }
+
+      // Spawn new pieces
+      spawnTimer -= dt;
+      if (spawnTimer <= 0) {
+        if (pieces.length < MAX_PIECES) {
+          const p = spawnPiece();
+          if (p) pieces.push(p);
+        }
+        spawnTimer = SPAWN_INTV;
+      }
+
+      // Move pieces downward
+      const dead = [];
+      for (const p of pieces) {
+        p.yFrac += p.speed * dt;
+        if (!canPlace(p.shape, p.x, Math.floor(p.yFrac) + 1)) {
+          settle(p);
+          dead.push(p);
+        }
+      }
+      pieces = pieces.filter(p => !dead.includes(p));
+    }
+
+    // ── Main loop ─────────────────────────────────────────────
+    let lastTime = performance.now();
+    let lastSec  = -1;
+
+    function mainLoop(now) {
+      const dt = Math.min((now - lastTime) / 1000, 0.1);
+      lastTime = now;
+
+      const { state, rem } = getTimerState();
+
+      // Background gradient
+      const col = colorAt(rem), bright = brighten(col, 45);
+      bgEl.style.background =
+        `radial-gradient(ellipse at 50% 38%, ${toRgb(bright)} 0%, ${toRgb(col)} 65%)`;
+
+      // Ring + progress bar
+      const prog = state === 'running' ? rem / TOTAL : state === 'idle' ? 1 : 0;
+      ringEl.style.strokeDashoffset = CIRC * (1 - prog);
+      barEl.style.width             = (prog * 100) + '%';
+
+      // Text – refresh once per second
+      const sec = Math.ceil(rem);
+      if (sec !== lastSec) {
+        lastSec = sec;
+        if (state === 'idle') {
+          timerEl.textContent = '04:00:00';
+          labelEl.textContent = 'In attesa delle 14:00';
+          timerEl.classList.remove('pulsing');
+        } else if (state === 'done') {
+          timerEl.textContent = '00:00:00';
+          labelEl.textContent = 'Tempo scaduto';
+          timerEl.classList.remove('pulsing');
+        } else {
+          timerEl.textContent = formatTime(rem);
+          if (rem >= MID) {
+            labelEl.textContent = 'Tutto nella norma';
+            timerEl.classList.remove('pulsing');
+          } else if (rem >= 3600) {
+            labelEl.textContent = 'Zona di attenzione';
+            timerEl.classList.remove('pulsing');
+          } else {
+            labelEl.textContent = '⚠️  Ultima ora  ⚠️';
+            timerEl.classList.add('pulsing');
+          }
+        }
+      }
+
+      // Tetris
+      updateTetris(dt);
+      drawTetris(now);
+
+      requestAnimationFrame(mainLoop);
+    }
+
+    requestAnimationFrame(mainLoop);
+  </script>
+</body>
+</html>

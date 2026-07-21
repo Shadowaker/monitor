@@ -1,27 +1,74 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eventi</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/events.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventi — Monitor 42Roma</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
+  <script src="{{ url_for('static', filename='vendor/qrcode.min.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/events.css') }}">
+  <script>
+    window.EventsBootstrap = {
+      announcements: {{ announcements|tojson|safe }},
+      eventsData: {{ events_data|tojson|safe }},
+      hasCustomAnnouncements: {{ has_future_announcements|tojson|safe }},
+      slideDurationMs: {{ delays.events_slide_ms|tojson|safe }},
+      nextPageUrl: {{ delays.next_page_url|tojson|safe }},
+      prevPageUrl: {{ delays.prev_page_url|tojson|safe }},
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/events-page.js') }}" defer></script>
+  {% include 'partials/kiosk_nav.j2.html' %}
 </head>
-<body>
-    <div class="container">
-        <h1>Eventi dei prossimi 7 giorni</h1>
-        <div class="events-list">
-            {% for event in events %}
-            <div class="event-item">
-                <h3>{{ event.name }}</h3>
-                <p><strong>Data Inizio:</strong> {{ event.formatted_begin_at }}</p>
-                <p><strong>Durata:</strong> {{ event.duration }}</p>
-                <p>{{ event.description }}</p>
+<body class="events-page{% if has_future_announcements %} events-page--split-bde{% else %} events-page--intra-only{% endif %}">
+  <div class="events-layout">
+    <section class="events-panel events-panel--intra" id="intraPanelLeft" aria-label="Eventi Intra 42">
+      <header class="events-panel__header">
+        <h2>Eventi</h2>
+        <span>Calendario campus</span>
+      </header>
+      <div class="event-carousel">
+        <div class="event-slider" id="eventSlider"></div>
+      </div>
+    </section>
+    {% if has_future_announcements %}
+    <section class="events-panel events-panel--custom" aria-label="Annunci custom">
+      <header class="events-panel__header">
+        <h2>Annunci</h2>
+        <span>Comunicazioni BDE</span>
+      </header>
+      <div class="event-carousel">
+        <div class="event-slider" id="announcementSlider">
+          {% for announcement in announcements %}
+          <div class="event-card" style="background-color: {{ announcement.color }}">
+            <h4 class="event-title">{{ announcement.title }}</h4>
+            <div class="event-card__body">
+              <p class="event-description">{{ announcement.description }}</p>
             </div>
-            {% endfor %}
+            {% if announcement.link %}
+            <footer class="event-card__footer event-card__footer--qr-only">
+              <div class="event-card__qr">
+                <div id="qrcode-announcement-{{ loop.index }}" class="qrcode"></div>
+              </div>
+            </footer>
+            {% endif %}
+          </div>
+          {% endfor %}
         </div>
-        <!-- Pulsante Home più elegante -->
-        <a class="home-button" href="{{ url_for('home') }}">Torna alla Home</a>
-    </div>
+      </div>
+    </section>
+    {% else %}
+    <section class="events-panel events-panel--intra events-panel--intra-right" id="intraPanelRight" hidden aria-label="Eventi Intra 42 — colonna destra">
+      <header class="events-panel__header">
+        <h2>Eventi</h2>
+        <span>Calendario campus</span>
+      </header>
+      <div class="event-carousel">
+        <div class="event-slider" id="eventSliderRight"></div>
+      </div>
+    </section>
+    {% endif %}
+  </div>
 </body>
 </html>

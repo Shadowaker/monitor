@@ -1,0 +1,115 @@
+:root {
+    /* 
+        LIGHT MODE
+    --bg-dark: #f3f5fb;
+    --bg-panel: #ffffff;
+    --bg-box: #f8faff;
+    --text-light: #1d2333;
+    --border: rgba(29, 35, 51, 0.12); */
+    --bg-dark: #1e1e2f;
+    --bg-panel: #2a2a40;
+    --bg-box: #333350;
+    --text-light: #ffffff;
+    --border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.new-sponsors-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--bg-dark);
+    color: var(--text-light);
+    font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.new-sponsors-main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.9rem 1.4rem 1.2rem;
+}
+
+.new-sponsors-main__logo {
+    width: min(42vw, 16rem);
+    height: auto;
+    filter: brightness(0) invert(1);
+    /* filter: none; */
+    flex-shrink: 0;
+}
+
+.new-sponsors-grid {
+    width: min(88vw, 980px);
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    gap: 0.55rem;
+    align-content: center;
+    overflow: hidden;
+}
+
+.new-sponsors-card {
+    grid-column: span 2;
+    width: 100%;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 0.4rem;
+    aspect-ratio: 1 / 1;
+    box-shadow: 0 10px 24px rgba(16, 24, 40, 0.1);
+}
+
+.new-sponsors-card__inner {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border-radius: 0.55rem;
+    border: 1px solid rgba(29, 35, 51, 0.08);
+    background: var(--bg-box);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 0.6rem;
+    overflow: hidden;
+}
+
+.new-sponsors-card__inner img {
+    width: 95%;
+    height: 95%;
+    object-fit: contain;
+}
+
+/* Layout 11 card: 3 + 3 + 3 + 2 (ultima riga centrata) */
+.new-sponsors-card:nth-child(10) {
+    grid-column: 2 / span 2;
+}
+
+.new-sponsors-card:nth-child(11) {
+    grid-column: 4 / span 2;
+}
+
+@media (min-width: 1600px) {
+    .new-sponsors-main__logo {
+        width: min(36vw, 18rem);
+    }
+
+    .new-sponsors-grid {
+        width: min(88vw, 1080px);
+    }
+}

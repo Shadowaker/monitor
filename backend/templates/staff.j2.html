@@ -4,157 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Staff Maintenance Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/staff.css') }}">
 </head>
 <body>
-  <div class="container">
+  <div class="container staff-page">
     <div class="left">
-      <div class="grids">
-        <!-- Cluster e3 -->
-        <div class="grid-box">
-          <div>E3</div>
-          <div class="cluster-label-grid-3">
-            <!-- R12 -->
-            <div class="label">R12</div>
-            <div class="cell" id="e3r12p8"></div><div class="cell" id="e3r12p7"></div><div class="cell" id="e3r12p6"></div><div class="cell" id="e3r12p5"></div>
-            <div class="cell" id="e3r12p4"></div><div class="cell" id="e3r12p3"></div><div class="cell" id="e3r12p2"></div><div class="cell" id="e3r12p1"></div>
-            <!-- R11 -->
-            <div class="label">R11</div>
-            <div class="cell" id="e3r11p8"></div><div class="cell" id="e3r11p7"></div><div class="cell" id="e3r11p6"></div><div class="cell" id="e3r11p5"></div>
-            <div class="cell" id="e3r11p4"></div><div class="cell" id="e3r11p3"></div><div class="cell" id="e3r11p2"></div><div class="cell" id="e3r11p1"></div>
-            <!-- R10 -->
-            <div class="label">R10</div>
-            <div class="cell" id="e3r10p8"></div><div class="cell" id="e3r10p7"></div><div class="cell" id="e3r10p6"></div><div class="cell" id="e3r10p5"></div>
-            <div class="cell" id="e3r10p4"></div><div class="cell" id="e3r10p3"></div><div class="cell" id="e3r10p2"></div><div class="cell" id="e3r10p1"></div>
-            <!-- Vuoto -->
-            <div class="labelx"></div>
-            <div class="cellx"></div><div class="cellx"></div><div class="cellx"></div><div class="cellx"></div>
-            <div class="cellx"></div><div class="cellx"></div><div class="cellx"></div><div class="cellx"></div>
-            <!-- R9 -->
-            <div class="label">R9</div>
-            <div class="cell" id="e3r9p8"></div><div class="cell" id="e3r9p7"></div><div class="cell" id="e3r9p6"></div><div class="cell" id="e3r9p5"></div>
-            <div class="cell" id="e3r9p4"></div><div class="cell" id="e3r9p3"></div><div class="cell" id="e3r9p2"></div><div class="cell" id="e3r9p1"></div>
-            <!-- R8 -->
-            <div class="label">R8</div>
-            <div class="cell" id="e3r8p8"></div><div class="cell" id="e3r8p7"></div><div class="cell" id="e3r8p6"></div><div class="cell" id="e3r8p5"></div>
-            <div class="cell" id="e3r8p4"></div><div class="cell" id="e3r8p3"></div><div class="cell" id="e3r8p2"></div><div class="cell" id="e3r8p1"></div>
-            <!-- R7 -->
-            <div class="label">R7</div>
-            <div class="cell" id="e3r7p8"></div><div class="cell" id="e3r7p7"></div><div class="cell" id="e3r7p6"></div><div class="cell" id="e3r7p5"></div>
-            <div class="cell" id="e3r7p4"></div><div class="cell" id="e3r7p3"></div><div class="cell" id="e3r7p2"></div><div class="cell" id="e3r7p1"></div>
-            <!-- R6 -->
-            <div class="label">R6</div>
-            <div class="cell" id="e3r6p8"></div><div class="cell" id="e3r6p7"></div><div class="cell" id="e3r6p6"></div><div class="cell" id="e3r6p5"></div>
-            <div class="cell" id="e3r6p4"></div><div class="cell" id="e3r6p3"></div><div class="cell" id="e3r6p2"></div><div class="cell" id="e3r6p1"></div>
-            <!-- R5 -->
-            <div class="label">R5</div>
-            <div class="cell" id="e3r5p8"></div><div class="cell" id="e3r5p7"></div><div class="cell" id="e3r5p6"></div><div class="cell" id="e3r5p5"></div>
-            <div class="cell" id="e3r5p4"></div><div class="cell" id="e3r5p3"></div><div class="cell" id="e3r5p2"></div><div class="cell" id="e3r5p1"></div>
-            <!-- R4 -->
-            <div class="label">R4</div>
-            <div class="cell" id="e3r4p8"></div><div class="cell" id="e3r4p7"></div><div class="cell" id="e3r4p6"></div><div class="cell" id="e3r4p5"></div>
-            <div class="cell" id="e3r4p4"></div><div class="cell" id="e3r4p3"></div><div class="cell" id="e3r4p2"></div><div class="cell" id="e3r4p1"></div>
-            <!-- Vuoto -->
-            <div class="labelx"></div>
-            <div class="cellx"></div><div class="cellx"></div><div class="cellx"></div><div class="cellx"></div>
-            <div class="cellx"></div><div class="cellx"></div><div class="cellx"></div><div class="cellx"></div>
-            <!-- R3 -->
-            <div class="label">R3</div>
-            <div class="cell" id="e3r3p8"></div><div class="cell" id="e3r3p7"></div><div class="cell" id="e3r3p6"></div><div class="cell" id="e3r3p5"></div>
-            <div class="cell" id="e3r3p4"></div><div class="cell" id="e3r3p3"></div><div class="cell" id="e3r3p2"></div><div class="cell" id="e3r3p1"></div>
-            <!-- R2 -->
-            <div class="label">R2</div>
-            <div class="cell" id="e3r2p8"></div><div class="cell" id="e3r2p7"></div><div class="cell" id="e3r2p6"></div><div class="cell" id="e3r2p5"></div>
-            <div class="cell" id="e3r2p4"></div><div class="cell" id="e3r2p3"></div><div class="cell" id="e3r2p2"></div><div class="cell" id="e3r2p1"></div>
-            <!-- R1 -->
-            <div class="label">R1</div>
-            <div class="cell" id="e3r1p8"></div><div class="cell" id="e3r1p7"></div><div class="cell" id="e3r1p6"></div><div class="cell" id="e3r1p5"></div>
-            <div class="cell" id="e3r1p4"></div><div class="cell" id="e3r1p3"></div><div class="cell" id="e3r1p2"></div><div class="cell" id="e3r1p1"></div>
-
-            <!-- Etichette colonna -->
-            <div class="label"></div>
-            <div class="label">8</div><div class="label">7</div><div class="label">6</div><div class="label">5</div>
-            <div class="label">4</div><div class="label">3</div><div class="label">2</div><div class="label">1</div>
-          </div>
-
-          <div class="info">
-            <p>Online: 00</p>
-            <p>Spenti: 0</p>
-            <p>In Manutenzione: 0</p>
-            <p>Totale: 96</p>
-            <p>Disponibili: 96</p>
-          </div>
-        </div>
-
-        <!-- Cluster e4 -->
-        <div class="grid-box">
-          <div>E4</div>
-          <div class="cluster-label-grid-4">
-            <div class="label">R14</div>
-            <div class="cell" id="e4r14p4"></div><div class="cell" id="e4r14p3"></div><div class="cell" id="e4r14p2"></div><div class="cell" id="e4r14p1"></div>
-
-            <div class="label">R13</div>
-            <div class="cell" id="e4r13p4"></div><div class="cell" id="e4r13p3"></div><div class="cell" id="e4r13p2"></div><div class="cell" id="e4r13p1"></div>
-
-            <div class="label">R12</div>
-            <div class="cell" id="e4r12p4"></div><div class="cell" id="e4r12p3"></div><div class="cell" id="e4r12p2"></div><div class="cell" id="e4r12p1"></div>
-
-            <div class="label">R11</div>
-            <div class="cell" id="e4r11p4"></div><div class="cell" id="e4r11p3"></div><div class="cell" id="e4r11p2"></div><div class="cell" id="e4r11p1"></div>
-
-            <div class="label">R10</div>
-            <div class="cell" id="e4r10p4"></div><div class="cell" id="e4r10p3"></div><div class="cell" id="e4r10p2"></div><div class="cell" id="e4r10p1"></div>
-
-            <div class="label">R9</div>
-            <div class="cell" id="e4r9p4"></div><div class="cell" id="e4r9p3"></div><div class="cell" id="e4r9p2"></div><div class="cell" id="e4r9p1"></div>
-
-            <div class="label">R8</div>
-            <div class="cell" id="e4r8p4"></div><div class="cell" id="e4r8p3"></div><div class="cell" id="e4r8p2"></div><div class="cell" id="e4r8p1"></div>
-
-            <div class="label">R7</div>
-            <div class="cell" id="e4r7p4"></div><div class="cell" id="e4r7p3"></div><div class="cell" id="e4r7p2"></div><div class="cell" id="e4r7p1"></div>
-
-            <div class="label">R6</div>
-            <div class="cell" id="e4r6p4"></div><div class="cell" id="e4r6p3"></div><div class="cell" id="e4r6p2"></div><div class="cell" id="e4r6p1"></div>
-
-            <div class="label">R5</div>
-            <div class="cell" id="e4r5p4"></div><div class="cell" id="e4r5p3"></div><div class="cell" id="e4r5p2"></div><div class="cell" id="e4r5p1"></div>
-
-            <div class="label">R4</div>
-            <div class="cell" id="e4r4p4"></div><div class="cell" id="e4r4p3"></div><div class="cell" id="e4r4p2"></div><div class="cell" id="e4r4p1"></div>
-
-            <div class="label">R3</div>
-            <div class="cell" id="e4r3p4"></div><div class="cell" id="e4r3p3"></div><div class="cell" id="e4r3p2"></div><div class="cell" id="e4r3p1"></div>
-
-            <div class="label">R2</div>
-            <div class="cell" id="e4r2p4"></div><div class="cell" id="e4r2p3"></div><div class="cell" id="e4r2p2"></div><div class="cell" id="e4r2p1"></div>
-
-            <div class="label">R1</div>
-            <div class="cell" id="e4r1p4"></div><div class="cell" id="e4r1p3"></div><div class="cell" id="e4r1p2"></div><div class="cell" id="e4r1p1"></div>
-
-            <!-- Etichette colonna -->
-            <div class="label"></div>
-            <div class="label">4</div><div class="label">3</div><div class="label">2</div><div class="label">1</div>
-          </div>
-
-          <div class="info">
-            <p>Online: 0</p>
-            <p>Spenti: 0</p>
-            <p>In Manutenzione: 0</p>
-            <p>Totale: 56</p>
-            <p>Disponibili: 56</p>
-          </div>
-        </div>
-      </div>
+      {% include 'partials/cluster_map.j2.html' %}
     </div>
 
     <div class="right">
       <div class="maintenance-form">
         <h3>Segnala PC in Manutenzione</h3>
-        <input type="text" id="pcId" placeholder="Inserisci ID PC separati da virgola (es. e3r12p8, e3r12p7)">
-        <button onclick="addToMaintenanceList()">Aggiungi alla Lista</button>
+        <input type="text" id="pcId" placeholder="ID separati da virgola (es. c3r5s4, c2r3, c1)">
+        <button type="button" onclick="addToMaintenanceList()">Aggiungi alla Lista</button>
       </div>
-      
+
       <div class="maintenance-list">
         <h3>PC in Manutenzione</h3>
         <ul id="maintenanceList">
@@ -162,195 +27,225 @@
           <li>
             {{ pc }}
             <div>
-              <button class="confirm-button" disabled>Confermato</button>
-              <button class="remove-button" onclick="removeMaintenance('{{ pc }}')">Rimuovi</button>
+              <button type="button" class="confirm-button" disabled>Confermato</button>
+              <button type="button" class="remove-button" onclick="removeMaintenance('{{ pc }}')">Rimuovi</button>
             </div>
           </li>
           {% endfor %}
         </ul>
         <div class="bulk-actions">
-          <button class="bulk-button confirm-all-button" onclick="confirmAllMaintenance()">Conferma Tutti</button>
-          <button class="bulk-button remove-all-button" onclick="removeAllMaintenance()">Rimuovi Tutti</button>
+          <button type="button" class="bulk-button confirm-all-button" onclick="confirmAllMaintenance()">Conferma Tutti</button>
+          <button type="button" class="bulk-button remove-all-button" onclick="removeAllMaintenance()">Rimuovi Tutti</button>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    // Initialize maintenance status
     const maintenancePCs = {{ maintenance_pcs|tojson|safe }};
     const pendingMaintenance = new Set();
-    
-    // Update cell colors based on maintenance status
-    function updateCellColors() {
-      maintenancePCs.forEach(pcId => {
+
+    const offlinePCs = {{ offline_pcs|default([])|tojson|safe }};
+    const usedPCs = {{ online_pcs|default([])|tojson|safe }};
+
+    {% set _offline_n = offline_pcs|default([])|length %}
+    {% set _used_n = online_pcs|default([])|length %}
+    {% set _maint_n = maintenance_pcs|default([])|length %}
+    {% set _stats_fallback = {
+      'total': 150,
+      'offline': _offline_n,
+      'online': 150 - _offline_n,
+      'occupied': _used_n,
+      'maintenance': _maint_n,
+      'available': [0, 150 - _offline_n - _used_n - _maint_n]|max
+    } %}
+    const serverStats = {{ location_stats|default(_stats_fallback)|tojson|safe }};
+
+    function resetCells() {
+      document.querySelectorAll('[id^="c1"], [id^="c2"], [id^="c3"]').forEach((element) => {
+        element.style.color = 'var(--color-available)';
+        element.style.backgroundColor = '';
+        element.classList.remove('offline', 'maintenance', 'occupied');
+        element.innerHTML = '';
+      });
+    }
+
+    function setOfflineLocation(ids) {
+      ids.forEach((id) => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.style.color = 'var(--color-offline)';
+          element.classList.add('offline');
+        }
+      });
+    }
+
+    function setUsedLocation(ids) {
+      ids.forEach((id) => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.style.color = 'var(--color-occupied)';
+          element.classList.add('occupied');
+        }
+      });
+    }
+
+    function applyMaintenanceStatus() {
+      maintenancePCs.forEach((pcId) => {
         const cell = document.getElementById(pcId);
         if (cell) {
+          cell.style.color = 'var(--color-maintenance)';
+          cell.style.backgroundColor = 'var(--color-maintenance)';
           cell.classList.add('maintenance');
         }
       });
     }
-    
-    // Expand input to full row/cluster
+
+    function fetchAndHighlight() {
+      resetCells();
+      if (offlinePCs.length) setOfflineLocation(offlinePCs);
+      if (usedPCs.length) setUsedLocation(usedPCs);
+      applyMaintenanceStatus();
+      updateStatistics();
+    }
+
+    function updateStatistics() {
+      const generalInfo = document.getElementById('general-stats');
+      if (!generalInfo) return;
+      generalInfo.innerHTML = `
+        <p class="spenti">Spenti ⚡️ <span>${serverStats.offline}</span></p>
+        <p class="online">Online <span>${serverStats.online}</span></p>
+        <p class="disponibili">Disponibili <span>${serverStats.available}</span></p>
+        <p class="utilizzati">Utilizzati <span>${serverStats.occupied}</span></p>
+        <p class="manutenzione">Manutenzione⚠️ <span>${serverStats.maintenance}</span></p>
+      `;
+    }
+
     function expandInput(input) {
       const parts = input.trim().toLowerCase();
-      if (parts.length < 2) return [input];
-      
-      const expanded = [];
-      if (parts.match(/^e[34]r\d+$/)) { // e3r9
-        const cluster = parts.substring(0, 2);
-        const row = parts.substring(3);
-        const maxPositions = cluster === 'e3' ? 8 : 4;
-        for (let i = 1; i <= maxPositions; i++) {
-          expanded.push(`${cluster}r${row}p${i}`);
-        }
-      } else if (parts.match(/^e[34]$/)) { // e3
-        const cluster = parts;
-        const maxRows = 12;
-        const maxPositions = cluster === 'e3' ? 8 : 4;
-        for (let r = 1; r <= maxRows; r++) {
-          for (let p = 1; p <= maxPositions; p++) {
-            expanded.push(`${cluster}r${r}p${p}`);
-          }
-        }
-      } else {
-        expanded.push(input);
+      if (!parts) return [];
+
+      if (/^c[123]$/.test(parts)) {
+        return Array.from(document.querySelectorAll(`.cell[id^="${parts}"]`)).map((c) => c.id);
       }
-      return expanded;
+      if (/^c[123]r\d+$/.test(parts)) {
+        return Array.from(document.querySelectorAll(`.cell[id^="${parts}"]`)).map((c) => c.id);
+      }
+      if (/^c[123]r\d+s\d+$/.test(parts)) {
+        return [parts];
+      }
+      return [parts];
     }
-    
-    // Add PCs to maintenance list
+
     function addToMaintenanceList() {
       const input = document.getElementById('pcId').value;
-      const inputs = input.split(',').map(id => id.trim()).filter(id => id);
-      
-      inputs.forEach(input => {
-        const expandedIds = expandInput(input);
-        expandedIds.forEach(pcId => {
+      const inputs = input.split(',').map((id) => id.trim()).filter(Boolean);
+
+      inputs.forEach((item) => {
+        expandInput(item).forEach((pcId) => {
           if (!maintenancePCs.includes(pcId) && !pendingMaintenance.has(pcId)) {
-            // Auto-approve immediately
             confirmMaintenance(pcId);
           }
         });
       });
-      
+
       document.getElementById('pcId').value = '';
     }
-    
-    // Add click handlers to all cells
-    document.querySelectorAll('.cell').forEach(cell => {
+
+    document.querySelectorAll('.cell').forEach((cell) => {
       cell.addEventListener('click', () => {
         const pcId = cell.id;
         if (!maintenancePCs.includes(pcId) && !pendingMaintenance.has(pcId)) {
-          // Auto-approve when clicked
           confirmMaintenance(pcId);
         } else if (maintenancePCs.includes(pcId)) {
-          // Remove from maintenance when clicked if already in maintenance
           removeMaintenance(pcId);
         }
       });
     });
-    
-    // Confirm all pending maintenance
+
     function confirmAllMaintenance() {
-      const pendingArray = Array.from(pendingMaintenance);
-      pendingArray.forEach(pcId => {
-        confirmMaintenance(pcId);
-      });
+      Array.from(pendingMaintenance).forEach((pcId) => confirmMaintenance(pcId));
     }
-    
-    // Remove all maintenance
+
     function removeAllMaintenance() {
-      const allPCs = [...maintenancePCs, ...Array.from(pendingMaintenance)];
-      allPCs.forEach(pcId => {
-        removeMaintenance(pcId);
-      });
+      [...maintenancePCs, ...Array.from(pendingMaintenance)].forEach((pcId) => removeMaintenance(pcId));
     }
-    
-    // Update maintenance list display
+
     function updateMaintenanceList() {
       const list = document.getElementById('maintenanceList');
       list.innerHTML = '';
-      
-      maintenancePCs.forEach(pc => {
+
+      maintenancePCs.forEach((pc) => {
         const li = document.createElement('li');
         li.innerHTML = `
           ${pc}
           <div>
-            <button class="confirm-button" disabled>Confermato</button>
-            <button class="remove-button" onclick="removeMaintenance('${pc}')">Rimuovi</button>
+            <button type="button" class="confirm-button" disabled>Confermato</button>
+            <button type="button" class="remove-button" onclick="removeMaintenance('${pc}')">Rimuovi</button>
           </div>
         `;
         list.appendChild(li);
       });
-      
-      pendingMaintenance.forEach(pc => {
+
+      pendingMaintenance.forEach((pc) => {
         const li = document.createElement('li');
         li.innerHTML = `
           ${pc}
-          <button class="confirm-button" onclick="confirmMaintenance('${pc}')">Conferma</button>
+          <button type="button" class="confirm-button" onclick="confirmMaintenance('${pc}')">Conferma</button>
         `;
         list.appendChild(li);
       });
     }
-    
-    // Confirm maintenance for a PC
+
     function confirmMaintenance(pcId) {
       const formData = new FormData();
       formData.append('pc_id', pcId);
-      
-      fetch('/toggle_maintenance', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          const cell = document.getElementById(pcId);
-          if (cell) {
-            cell.classList.add('maintenance');
+
+      fetch('/toggle_maintenance', { method: 'POST', body: formData })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            const cell = document.getElementById(pcId);
+            if (cell) {
+              cell.classList.add('maintenance');
+              cell.style.color = 'var(--color-maintenance)';
+              cell.style.backgroundColor = 'var(--color-maintenance)';
+            }
+            if (!maintenancePCs.includes(pcId)) maintenancePCs.push(pcId);
+            pendingMaintenance.delete(pcId);
+            serverStats.maintenance = maintenancePCs.length;
+            updateMaintenanceList();
+            updateStatistics();
           }
-          if (!maintenancePCs.includes(pcId)) {
-            maintenancePCs.push(pcId);
-          }
-          pendingMaintenance.delete(pcId);
-          updateMaintenanceList();
-        }
-      })
-      .catch(error => console.error('Error:', error));
+        })
+        .catch((error) => console.error('Error:', error));
     }
-    
-    // Remove PC from maintenance
+
     function removeMaintenance(pcId) {
       const formData = new FormData();
       formData.append('pc_id', pcId);
       formData.append('action', 'remove');
-      
-      fetch('/toggle_maintenance', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          const cell = document.getElementById(pcId);
-          if (cell) {
-            cell.classList.remove('maintenance');
+
+      fetch('/toggle_maintenance', { method: 'POST', body: formData })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            const cell = document.getElementById(pcId);
+            if (cell) cell.classList.remove('maintenance');
+            const index = maintenancePCs.indexOf(pcId);
+            if (index > -1) maintenancePCs.splice(index, 1);
+            pendingMaintenance.delete(pcId);
+            fetchAndHighlight();
+            updateMaintenanceList();
           }
-          const index = maintenancePCs.indexOf(pcId);
-          if (index > -1) {
-            maintenancePCs.splice(index, 1);
-          }
-          pendingMaintenance.delete(pcId);
-          updateMaintenanceList();
-        }
-      })
-      .catch(error => console.error('Error:', error));
+        })
+        .catch((error) => console.error('Error:', error));
     }
-    
-    // Initialize the view
-    updateCellColors();
-    updateMaintenanceList();
+
+    window.addEventListener('load', () => {
+      fetchAndHighlight();
+      updateMaintenanceList();
+    });
   </script>
 </body>
-</html> 
+</html>

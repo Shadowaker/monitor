@@ -1,0 +1,39 @@
+{% set clusters = [
+  {"name": "Piano -1", "prefix": "c1", "rows": [7, 6, 5, 4, 3, 2, 1], "hidden_rows": [], "stations_by_row": {1: 6}},
+  {"name": "Piano  0", "prefix": "c2", "rows": [7, 6, 5, 4, 3, 2, 1], "hidden_rows": [7], "stations_by_row": {}},
+  {"name": "Piano +1", "prefix": "c3", "rows": [7, 6, 5, 4, 3, 2, 1], "hidden_rows": [7], "stations_by_row": {}}
+] %}
+<div class="monitor-sprite" aria-hidden="true">{{ svg_content|safe }}</div>
+<div class="grids">
+  {% for cluster in clusters %}
+  <div class="grid-box">
+    <div>{{ cluster.name }}</div>
+    <div class="cluster-grid">
+      <div class="label"></div>
+      {% for station in range(8, 0, -1) %}
+      <div class="label">{{ station }}</div>
+      {% endfor %}
+      {% for row in cluster.rows %}
+      {% set row_hidden = row in cluster.hidden_rows %}
+      <div class="label{% if row_hidden %} label--hidden{% endif %}">{% if not row_hidden %}R{{ row }}{% endif %}</div>
+      {% for station in range(8, 0, -1) %}
+      {% if row_hidden %}
+      <div class="cellx"></div>
+      {% else %}
+      {% set station_count = cluster.stations_by_row.get(row, 8) %}
+      {% if station > station_count %}
+      <div class="cellx"></div>
+      {% else %}
+      <div class="ws-cell{% if station % 2 == 1 %} ws-cell--flipped{% endif %}" id="{{ cluster.prefix }}r{{ row }}s{{ station }}">
+        <svg class="ws-cell__icon" viewBox="-178.86 -485.26 803.689 804.561" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <use href="#dell-monitor" x="-178.86" y="-485.26" width="803.689" height="804.561"/>
+        </svg>
+      </div>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
