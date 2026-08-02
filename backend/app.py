@@ -282,10 +282,12 @@ def load_announcement(announcement_id: str):
 
 
 # === OAuth ===
-AUTH_URL = (
-    f"{config.OAUTH_AUTHORIZE_URL}?client_id={config.OAUTH_CLIENT_ID}"
-    f"&redirect_uri={config.OAUTH_REDIRECT_URI}&response_type=code&scope=public"
-)
+def build_auth_url(state: str) -> str:
+    return (
+        f"{config.OAUTH_AUTHORIZE_URL}?client_id={config.OAUTH_CLIENT_ID}"
+        f"&redirect_uri={config.OAUTH_REDIRECT_URI}&response_type=code&scope=public"
+        f"&state={state}"
+    )
 
 
 def get_token():
@@ -514,13 +516,17 @@ def events():
 def login():
     if "user_login" in session:
         return redirect(url_for("choose"))
-    return render_template("login.j2.html", auth_url=AUTH_URL)
+    state = secrets.token_urlsafe(32)
+    session["oauth_state"] = state
+    return render_template("login.j2.html", auth_url=build_auth_url(state))
 
 
 @app.route("/callback")
 def oauth_callback():
     code = request.args.get("code")
-    if not code:
+    state = request.args.get("state")
+    expected_state = session.pop("oauth_state", None)
+    if not code or not state or not expected_state or not secrets.compare_digest(state, expected_state):
         return redirect(url_for("choose"))
 
     try:
